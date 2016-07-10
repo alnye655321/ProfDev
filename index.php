@@ -781,6 +781,7 @@ if($Display == "Payroll"){
 		<tr>
 			<th>SNum</th>
 			<th>Name</th>
+			<th>Current Level</th>
 			<th>Increase To</th>
 			<th>VP</th>
 			<th>Advance</th>
@@ -790,12 +791,13 @@ if($Display == "Payroll"){
 		<tr>
 			<th>SNum</th>
 			<th>Name</th>
+			<th>Current Level</th>
 			<th>Increase To</th>
 			<th>VP</th>
 			<th>Advance</th>
 			</tr>
 		<tr>
-			<th colspan="5" class="ts-pager form-horizontal">
+			<th colspan="6" class="ts-pager form-horizontal">
 				<button type="button" class="btn first"><i class="icon-step-backward glyphicon glyphicon-step-backward"></i></button>
 				<button type="button" class="btn prev"><i class="icon-arrow-left glyphicon glyphicon-backward"></i></button>
 				<span class="pagedisplay"></span> <!-- this can be any element, including an input -->
@@ -835,6 +837,7 @@ if($_SESSION["role"] == "payroll") {
 		
 		echo "<td>" . $row['SNum'] . "</td>";
 		echo '<td>'.$row['LastName'].', '. $row['FirstName'].'</td>';
+		echo "<td>" . $row['Level'] . "</td>";		
 		echo "<td>" . $row['PendingLevel'] . "</td>";		
 		
 		if($_SESSION["role"] == "VP"){
