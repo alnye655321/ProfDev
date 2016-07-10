@@ -49,9 +49,48 @@ while($row = mysqli_fetch_array($result)){
 	if($row['Payroll'] == 1) {
 		$_SESSION["role"] = "payroll";
 	}
+	
+	if($row['Admin'] == 1) {
+		$_SESSION["admin"] = true;
+	}
 
 }
 // Close Set User Role Info
+
+// Admin - change role to...
+if($_POST['ChairChange'] && $_SESSION["admin"] == true) {
+	$_SESSION["role"] = "chair";
+	mysqli_query($con2,"UPDATE Users SET Chair = '1' WHERE SNum = '$user'");
+	mysqli_query($con2,"UPDATE Users SET VP = NULL WHERE SNum = '$user'");
+	mysqli_query($con2,"UPDATE Users SET Dean = NULL WHERE SNum = '$user'");
+	mysqli_query($con2,"UPDATE Users SET Payroll = NULL WHERE SNum = '$user'");
+}
+
+if($_POST['VPChange'] && $_SESSION["admin"] == true) {
+	$_SESSION["role"] = "VP";
+	mysqli_query($con2,"UPDATE Users SET Chair = NULL WHERE SNum = '$user'");
+	mysqli_query($con2,"UPDATE Users SET VP = '1' WHERE SNum = '$user'");
+	mysqli_query($con2,"UPDATE Users SET Dean = NULL WHERE SNum = '$user'");
+	mysqli_query($con2,"UPDATE Users SET Payroll = NULL WHERE SNum = '$user'");
+}
+
+if($_POST['DeanChange'] && $_SESSION["admin"] == true) {
+	$_SESSION["role"] = "dean";
+	mysqli_query($con2,"UPDATE Users SET Chair = NULL WHERE SNum = '$user'");
+	mysqli_query($con2,"UPDATE Users SET VP = NULL WHERE SNum = '$user'");
+	mysqli_query($con2,"UPDATE Users SET Dean = '1' WHERE SNum = '$user'");
+	mysqli_query($con2,"UPDATE Users SET Payroll = NULL WHERE SNum = '$user'");
+}
+
+if($_POST['PayrollChange'] && $_SESSION["admin"] == true) {
+	$_SESSION["role"] = "payroll";
+	mysqli_query($con2,"UPDATE Users SET Chair = NULL WHERE SNum = '$user'");
+	mysqli_query($con2,"UPDATE Users SET VP = NULL WHERE SNum = '$user'");
+	mysqli_query($con2,"UPDATE Users SET Dean = NULL WHERE SNum = '$user'");
+	mysqli_query($con2,"UPDATE Users SET Payroll = '1' WHERE SNum = '$user'");
+}
+
+// Close Admin - change role to...
 
 
 $Display = $_SESSION["Display"]; // set dept based on session
@@ -880,10 +919,39 @@ echo '</table></div>';
         <div class="col-sm-4">
           <div class="panel panel-default">
             <div class="panel-heading">
-              <h3 class="panel-title">Current Role</h3>
+              <h3 class="panel-title">Current Role: <?php echo $_SESSION["role"]; ?></h3>
             </div>
             <div class="panel-body">
-            <?php echo $_SESSION["role"]; ?>
+            <?php               
+            echo '<form method="post" action="index.php">';
+            
+	            echo '<p><strong>Change Role To:</strong></p>
+	            
+	              <div class="checkbox">
+				    <label>
+				      <input type="checkbox" name="ChairChange"> Chair
+				    </label>
+				  </div>
+				  <div class="checkbox">
+				    <label>
+				      <input type="checkbox" name="VPChange"> VP
+				    </label>
+				  </div>
+				  <div class="checkbox">
+				    <label>
+				      <input type="checkbox" name="DeanChange"> Dean
+				    </label>
+				  </div>
+				  <div class="checkbox">
+				    <label>
+				      <input type="checkbox" name="PayrollChange"> Payroll
+				    </label>
+				  </div>';
+				  echo '<button type="submit" class="btn btn-default">Submit</button>';
+  
+            echo '</form>';
+            
+            ?>
             </div>
           </div>
           <div class="panel panel-primary">
