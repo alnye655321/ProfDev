@@ -216,7 +216,7 @@ $(document).ready(function(){
               <ul class="dropdown-menu">
                 <li><a href="add_dev.php">Add ProfDev</a></li>
                 <li><a href="add_event.php">Add Event</a></li>
-                <li><a href="#">Something else here</a></li>
+                <li><a href="add_user.php">Add missing user</a></li>
                 <li role="separator" class="divider"></li>
                 <li class="dropdown-header">Nav header</li>
                 <li><a href="#">Separated link</a></li>
