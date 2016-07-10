@@ -115,10 +115,18 @@ $FirstName = str_replace(",",";",$FirstName);
 $LastName=mysqli_real_escape_string($con, $LastName);
 $LastName = str_replace(",",";",$LastName);
 
-$Level = 1;
-
-$sql2 = "INSERT INTO Level (SNum, FirstName, LastName, Prefix, Level)
-VALUES ('$SNum','$FirstName','$LastName','$Prefix','$Level')";
+$result = mysqli_query($con,"SELECT CRN FROM TeachingInfo ORDER BY CRN DESC LIMIT 1"); //set very high CRN to distinguish from actual courses. On first run set above 10 000 000 
+	$row = mysqli_fetch_array($result);
+	if($row['CRN'] < 10000000) { 
+		$CRN = 10000000;
+	}
+	else {
+		$CRN=$row['CRN'] + 1;
+	}	
+	
+	
+$sql2 = "INSERT INTO TeachingInfo (CRN, SNum, FirstName, LastName, Subject, ContactHours, CourseCreditsHold)
+VALUES ('$CRN','$SNum','$FirstName','$LastName','$Prefix','0','0')";
 
 if (mysqli_query($con, $sql2)){
 

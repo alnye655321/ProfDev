@@ -215,6 +215,25 @@ while($row = mysqli_fetch_array($result3))
 echo "<br>finished";
 }
 
+
+//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!Finish Script!!!!!!!!!!!!!!!!!!!!! Add Levels table entries to new faculty, based on new semester .csv data import
+$levelsTableAdd = false;
+if($levelsTableAdd == true)
+{
+$Level = 1;
+
+$sql2 = "INSERT INTO Level (SNum, FirstName, LastName, Prefix, Level)
+VALUES ('$SNum','$FirstName','$LastName','$Prefix','$Level')";
+
+if (mysqli_query($con, $sql2)){
+
+	echo "New record created successfully";}
+	else {
+    echo "Error: " . $sql2 . "<br>" . mysqli_error($con);
+}
+
+}
+
 //$result = mysqli_query($con,"SELECT id, SNum FROM Activity");
 //$row = mysqli_fetch_array($result);
 //return $row;
