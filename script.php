@@ -5,7 +5,7 @@ ignore_user_abort(true);             // keep on going even if user pulls the plu
 while(ob_get_level())ob_end_clean(); // remove output buffers
 ob_implicit_flush(true);             // output stuff directly
 
-
+//test ?test?
 include 'connect.php';
 
 
@@ -30,7 +30,7 @@ $result = mysqli_query($con,"SELECT DISTINCT Semester FROM TeachingInfo WHERE SN
 	$row_cnt = mysqli_num_rows($result);
 
 $CreditsTotal = 0; $ContactTotal = 0;
-	$result1 = mysqli_query($con,"SELECT ContactHours, CourseCreditsHold FROM TeachingInfo WHERE SNum = '$SNum'");	
+	$result1 = mysqli_query($con,"SELECT ContactHours, CourseCreditsHold FROM TeachingInfo WHERE SNum = '$SNum'");
 		while($row = mysqli_fetch_array($result1))
 		{
 			$ContactTotal = $ContactTotal + $row['ContactHours'];
@@ -57,7 +57,7 @@ while($row = mysqli_fetch_array($result2)){ //set requirement bools based on old
 		mysqli_query($con,"UPDATE Level SET ChairRec2Eval = '2016-06-28' WHERE SNum = '$SNum'");
 		mysqli_query($con,"UPDATE Level SET ChairRec2Ass = '2016-06-28' WHERE SNum = '$SNum'");
 	}
-	
+
 	if($row['Level'] == 3 ) { //set requirement bools based on old level data
 	mysqli_query($con,"UPDATE Level SET 15hrProfDev = '1' WHERE SNum = '$SNum'");
 	mysqli_query($con,"UPDATE Level SET 6SemTeach = '1' WHERE SNum = '$SNum'");
@@ -104,9 +104,9 @@ while($row = mysqli_fetch_array($result))
 			{
 				$Subject = $row1['Subject'];
 				mysqli_query($con,"UPDATE Activity SET Prefix = '$Subject' WHERE id = '$id'");
-				
+
 			}
-		
+
 		}
 	}
 echo "<br>finished";
@@ -129,9 +129,9 @@ while($row = mysqli_fetch_array($result))
 			{
 				$Subject = $row1['Subject'];
 				mysqli_query($con,"UPDATE Level SET Prefix = '$Subject' WHERE SNum = '$SNum'");
-				
+
 			}
-		
+
 		}
 	}
 echo "<br>finished";
@@ -160,9 +160,9 @@ while($row = mysqli_fetch_array($result))
 				$LastName = $row1['LastName'];
 				mysqli_query($con,"UPDATE Activity SET FirstName = '$FirstName' WHERE id = '$id'");
 				mysqli_query($con,"UPDATE Activity SET LastName = '$LastName' WHERE id = '$id'");
-				
+
 			}
-		
+
 		}
 	}
 echo "<br>finished";
@@ -197,7 +197,7 @@ while($row = mysqli_fetch_array($result3))
 	{
 		$SNum = $row['SNum'];
 		$inactive = $row['Inactive'];
-		
+
 		if($row['Inactive'] == 1){
 			$result4 = mysqli_query($con,"SELECT SNum FROM Activity");
 			while($row = mysqli_fetch_array($result4))
@@ -205,9 +205,9 @@ while($row = mysqli_fetch_array($result3))
 				$SNumX = $row['SNum'];
 				if($SNum == $SNumX ){
 					mysqli_query($con,"UPDATE Activity SET Inactive = '$inactive' WHERE SNum = '$SNumX'");
-				
+
 				}
-			
+
 			}
 		}
 
