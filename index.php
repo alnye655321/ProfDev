@@ -364,7 +364,7 @@ echo '
 	<input type="hidden" name="TableDisplay" type="text" value="Payroll">
 	<input type="hidden" name="displayChange" type="text" value="true">
 	<input type="hidden" name="dept" type="text" value="'.$dept.'">
-	<input type="submit" class="btn btn-default btn-block inactive" color="blue" id="Payroll" value="Payroll">
+	<input type="submit" class="btn btn-default btn-block inactive" color="blue" id="Payroll" value="Advance">
 </form></div>
 ';
 ?>
@@ -772,6 +772,7 @@ echo '</table></div>';
 
 <?php
 // Payroll Table
+// Payroll = "Advance" in user display
 if($Display == "Payroll"){
 	echo '<script>document.getElementById("'.$Display.'").className = "btn btn-primary btn-block active";</script>';
 //bootstrap classes added by the uitheme widget
@@ -782,7 +783,7 @@ if($Display == "Payroll"){
 			<th>Name</th>
 			<th>Increase To</th>
 			<th>VP</th>
-			<th>Payroll</th>
+			<th>Advance</th>
 			</tr>
 	</thead>
 	<tfoot>
@@ -791,7 +792,7 @@ if($Display == "Payroll"){
 			<th>Name</th>
 			<th>Increase To</th>
 			<th>VP</th>
-			<th>Payroll</th>
+			<th>Advance</th>
 			</tr>
 		<tr>
 			<th colspan="5" class="ts-pager form-horizontal">
@@ -836,16 +837,16 @@ if($_SESSION["role"] == "payroll") {
 		echo '<td>'.$row['LastName'].', '. $row['FirstName'].'</td>';
 		echo "<td>" . $row['PendingLevel'] . "</td>";		
 		
-		if($_SESSION["role"] == "VP"){ //!!!!!!removed class="form1" below!!!!!
-		echo '<td><form style="float:left">A: <input type="checkbox" name="VPlevelIncrease" value="'.$row['SNum'].'"><input type="hidden" name="VPcheckLevel" type="text" value="true"></form> 
-			<form style="float:right">D: <input type="checkbox" '.$VPdeny.' name="VPdeny" id="'.$VPdenyID.'" value="'.$row['id'].'"><input type="hidden" name="pendingCheck" type="text" value="true"></form>';
+		if($_SESSION["role"] == "VP"){
+		echo '<td><form class="form1" style="float:left">A: <input type="checkbox" name="VPlevelIncrease" value="'.$row['SNum'].'"><input type="hidden" name="payrollVP" type="text" value="true"></form> ';			
 		echo '</td>';}
 		else {echo "<td></td>";}
 		
-		if($_SESSION["role"] == "payroll"){ //!!!!!!removed class="form1" below!!!!!
-		echo '<td><form style="float:left">A: <input type="checkbox" name="Dean" value="'.$row['id'].'"><input type="hidden" name="pendingCheck" type="text" value="true"></form> 
-			<form style="float:right">D: <input type="checkbox" name="deanDeny" value="'.$row['id'].'"><input type="hidden" name="pendingCheck" type="text" value="true"></form>  
-		</td>';}
+		if($_SESSION["role"] == "payroll"){
+		echo '<td><form class="form1" style="float:left">A: <input type="checkbox" name="PayrollLevelIncrease" value="'.$row['SNum'].'">
+		<input type="hidden" name="PendingLevel" type="text" value="'.$row['PendingLevel'].'">
+		<input type="hidden" name="payrollHR" type="text" value="true"></form>';
+		echo '</td>';}
 		else {echo "<td></td>";}
 		
 		echo "</tr>";
