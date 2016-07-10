@@ -199,6 +199,8 @@ function getChairEmail($SNum) {
 // SQL Add
 if($formSubmit == "true"){
 	
+
+	
 		$uploadOk = 1; $target_file = NULL;
 		if($_FILES["fileToUpload"]["error"] == 0) {
 			include 'upload.php';
@@ -249,6 +251,19 @@ if($formSubmit == "true"){
 	if($uploadOk = 0) {
 		echo '<br>File Upload Error: '.$uploadError.'<br>';
 	}
+	
+	//Missing Level entry check
+	$result = mysqli_query($con,"SELECT DISTINCT SNum FROM Level WHERE SNum = '$SNum'");
+	$row_cnt = mysqli_num_rows($result);	
+	
+	if($row_cnt != 1) {
+		$Level = 1; //create Level entry, starting at 1
+		$sql2 = "INSERT INTO Level (SNum, FirstName, LastName, Prefix, Level)
+		VALUES ('$SNum','$FirstName','$LastName','$Prefix','$Level')";	
+		mysqli_query($con, $sql2);
+	}
+	//close Missing Level entry check
+	
 					//Send Email to Chair
 					$message = "New Prof Dev Activity Posted for Approval";
 					// In case any of our lines are larger than 70 characters, we should use wordwrap()
