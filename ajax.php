@@ -416,7 +416,7 @@ if($payrollVP == "true" || $payrollHR == "true")
 class ajaxValidate {
 function formValidate() {
 
-global $con;
+global $con; global $payrollVP; global $payrollHR;
 
 if($payrollVP == "true") {
 	$SNum = @$_POST['VPlevelIncrease'];
@@ -439,14 +439,6 @@ if($payrollHR == "true") {
 
 
 
-$satTeach2 = @$_POST['satTeach2'];
-$courseEval2 = @$_POST['courseEval2'];
-$assReq2 = @$_POST['assReq2'];
-
-$satTeach3 = @$_POST['satTeach3'];
-$courseEval3 = @$_POST['courseEval3'];
-$assReq3 = @$_POST['assReq3'];
-
                 
 //Establish values that will be returned via ajax
 $return = array();
@@ -459,34 +451,7 @@ $return['error'] = false;
 	//Additional Info
 		$return['type'] = '';
 
-$today = date("Y/m/d");	
 
-if($satTeach2 == "true") {mysqli_query($con,"UPDATE Level SET ChairRec2Obs = '$today' WHERE SNum = '$SNum'");}
-if($courseEval2 == "true") {mysqli_query($con,"UPDATE Level SET ChairRec2Eval = '$today' WHERE SNum = '$SNum'");}
-if($assReq2 == "true") {mysqli_query($con,"UPDATE Level SET 	ChairRec2Ass = '$today' WHERE SNum = '$SNum'");}
-
-if($satTeach3 == "true") {mysqli_query($con,"UPDATE Level SET ChairRec3Obs = '$today' WHERE SNum = '$SNum'");}
-if($courseEval3 == "true") {mysqli_query($con,"UPDATE Level SET ChairRec3Eval = '$today' WHERE SNum = '$SNum'");}
-if($assReq3 == "true") {mysqli_query($con,"UPDATE Level SET 	ChairRec3Ass = '$today' WHERE SNum = '$SNum'");}
-
-$result = mysqli_query($con,"SELECT * FROM Level WHERE SNum = '$SNum'"); //check if all chair rec values are present
-while($row = mysqli_fetch_array($result)) {
-	
-
-	if($row['ChairRec2Obs'] != NULL && $row['ChairRec2Eval'] != NULL && $row['ChairRec2Ass'] != NULL) {
-		mysqli_query($con,"UPDATE Level SET ChairRec2 = '1' WHERE SNum = '$SNum'"); //then update overall ChairRec value based on level
-		$return['type'] = 'ChairRec2Complete';
-		$return['SNumID'] = $SNum . "ID2";
-	}
-	
-	if($row['ChairRec3Obs'] != NULL && $row['ChairRec3Eval'] != NULL && $row['ChairRec3Ass'] != NULL) {
-		mysqli_query($con,"UPDATE Level SET ChairRec3 = '1' WHERE SNum = '$SNum'"); //then update overall ChairRec value based on level
-		$return['type'] = 'ChairRec3Complete';
-		$return['SNumID'] = $SNum . "ID3";
-	}
-	
-}
-levelUpdate($SNum); //run level update based on fetched SNum
 
 	return json_encode($return);
 

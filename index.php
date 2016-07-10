@@ -877,10 +877,10 @@ echo '</table></div>';
         <div class="col-sm-4">
           <div class="panel panel-default">
             <div class="panel-heading">
-              <h3 class="panel-title">Panel title</h3>
+              <h3 class="panel-title">Current Role</h3>
             </div>
             <div class="panel-body">
-              Panel content
+            <?php echo $_SESSION["role"]; ?>
             </div>
           </div>
           <div class="panel panel-primary">
