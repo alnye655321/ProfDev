@@ -54,7 +54,7 @@ function levelUpdate($SNum)
 	}
 	//Move to Level 3 = 6 semesters && 24 credit hours or 360 contact hours
 	if($level == 2){
-		if($row_cnt >= 6 && ($ContactTotal >= 360 || $CreditsTotal >= 24) ){
+		if($row_cnt >= 6 && ($ContactTotal >= 360 || $CreditsTotal >= 24 && $hoursTotal >= 15) ){
 			mysqli_query($con,"UPDATE Level SET 6SemTeach = '1' WHERE SNum = '$SNum'");
 			
 			if($ChairRec3 == 1) {
