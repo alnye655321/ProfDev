@@ -33,7 +33,7 @@ include 'connect.php';
 		
 		}
 		
-	if($login == true && $year == "ProfDev")
+	if($login == true && $_POST['ProfDev'])
 	{		$count = $row['Logins'] + 1;
 			mysqli_query($con2,"UPDATE Users SET Logins = '$count' WHERE SNum = '$user'");	
 			$hour = time() + 14400;
@@ -50,7 +50,7 @@ include 'connect.php';
 			$user = $user . "_" . $year;
 			setcookie("ID_Data", $user, $hour);
 			//setcookie("Key_Data", $pass, $hour);	
-			echo "<script> window.location.assign('index.php'); </script>";}
+			echo "<script> window.location.assign('index1saf4543gdsfgdfg.php'); </script>";}
 
 }
 
@@ -386,9 +386,9 @@ echo '">';
       <select name="year" id="year">
        <option value="2016">2016</option>
         <option value="2017">2017</option>
-        <option value="ProfDev">ProfDev</option></select>
+       </select>
     </p>
-
+		<label>ProDev:</label> <input type="checkbox" name="ProfDev" style="margin-top:10px;">
     <p class="login-submit">
       <button type="submit" class="login-button">Login</button>
     </p>
