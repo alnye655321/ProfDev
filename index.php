@@ -374,14 +374,17 @@ cursor:pointer;
 	if(!empty($dept)){
   echo '<option value="'.$dept.'">'.$dept.'</option>';
 }
-  $deptList = "AAA ASE ACC ANT ART ASL AST BIO BTE BUS CCR CHE CIS CNG COM CRJ CSC CWB DAN DPM ECE ECO EDU EGG EMS ENG ESL ETH FST FVM GEO GEY HIS HPR HUM HWE JRD LEA LIT MAN MAR MAT MGD MUS NUA PAR PED PHI PHY POS PSM PSY REE SCI SOC SPA THE TRI WST";
-  $deptsplit=explode(" ",$deptList);
-  foreach($deptsplit as $value) {
-  echo '<option value="';
-echo $value;
-echo '">';
-echo $value;
-echo '</option>'; 
+  //$deptList = "AAA ASE ACC ANT ART ASL AST BIO BTE BUS CCR CHE CIS CNG COM CRJ CSC CWB DAN DPM ECE ECO EDU EGG EMS ENG ESL ETH FST FVM GEO GEY HIS HPR HUM HWE JRD LEA LIT MAN MAR MAT MGD MUS NUA PAR PED PHI PHY POS PSM PSY REE SCI SOC SPA THE TRI WST";
+	$result = mysqli_query($con2,"SELECT * FROM Users WHERE SNum = '$user'"); // get Dept list from Users table
+	$row = mysqli_fetch_array($result);
+	$Depts = $row['Depts'];
+	$deptsplit=explode(" ",$Depts);//split into array and run options with each 3 letter subject prefix
+	foreach($deptsplit as $value) {  
+	echo '<option value="';
+	echo $value;
+	echo '">';
+	echo $value;
+	echo '</option>'; 
 }
   ?>
 
