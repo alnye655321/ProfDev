@@ -264,17 +264,11 @@ if($formSubmit == "true"){
 	}
 	//close Missing Level entry check
 	
-					//Send Email to Chair
-					$message = "New Prof Dev Activity Posted for Approval";
-					// In case any of our lines are larger than 70 characters, we should use wordwrap()
-					$message = wordwrap($message, 70, "\r\n");					
-					$headers = "From: CCA_ProfDev" . "\r\n" .
-					"CC: alnye655321@gmail.com";
-					$MailSubject = "CCA Schedule - Course Addition";
-					// Send
-					$email = getChairEmail($SNum);					
-					mail($email, $MailSubject, $message,$headers);					
-					//Close Send Email to Chair
+	//send email to chair
+	$message = "New Prof Dev Activity Posted for Approval";
+	email(getChairEmail($SNum),"alnye655321@gmail.com", "CCA ProDev - Activity Addition", $message);
+	
+
 }
 
 // Form
