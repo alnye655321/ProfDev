@@ -265,7 +265,10 @@ if($formSubmit == "true"){
 	//close Missing Level entry check
 	
 	//send email to chair
-	$message = "New Prof Dev Activity Posted for Approval";
+	$message = "New Prof Dev Activity Posted for Approval \r\n
+	Name : $LastName  ,  $FirstName  \r\n
+	Type: $Type  \r\n
+	Item: $Item";
 	email(getChairEmail($SNum),"alnye655321@gmail.com", "CCA ProDev - Activity Addition", $message);
 	
 

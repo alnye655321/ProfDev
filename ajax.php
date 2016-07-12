@@ -2,6 +2,7 @@
 
 include 'connect.php';
 
+	
 //Level Set info 
 //Running each time an approval/denial is made
 
@@ -90,6 +91,17 @@ function getChairName($SNum) {
 }
 
 
+//email function	
+	function email($to, $cc, $MailSubject, $message){
+	
+		// In case any of our lines are larger than 70 characters, we should use wordwrap()
+		//$message = wordwrap($message, 70, "\r\n");					
+		$headers = "From: CCA_ProfDev" . "\r\n" .
+		"CC: $cc";
+		// Send
+		mail($to, $MailSubject, $message,$headers);	
+	}
+
 function activeStatus($SNum) {
 	global $con;
 	$getID = mysqli_fetch_assoc(mysqli_query($con,"SELECT Inactive FROM Level WHERE SNum = '$SNum'"));
@@ -119,7 +131,7 @@ if($pendingCheck == "true")
 class ajaxValidate {
 function formValidate() {
 
-global $con; global $id; 
+global $con; global $id; global $con2;
 
 
  //Put form elements into post variables (this is where you would sanitize your data)
@@ -139,8 +151,8 @@ $return['type'] = '';
 
 $today = date("Y/m/d");
 
-$getID = mysqli_fetch_assoc(mysqli_query($con,"SELECT SNum FROM Activity WHERE id = '$id'"));
-$SNum = $getID["SNum"];
+//$getID = mysqli_fetch_assoc(mysqli_query($con,"SELECT SNum FROM Activity WHERE id = '$id'"));
+//$SNum = $getID["SNum"];
 
 // lots of email here --->>>>>>>
 if(!empty($Chair)){
@@ -149,6 +161,16 @@ if(!empty($Chair)){
 	mysqli_query($con,"UPDATE Activity SET Chairdeny = NULL WHERE id = '$id'");
 	$return['type'] = "ChairdenyRemove";
 	$return['msg'] = "ChairDenyID" . $id;
+	
+	//email
+	$getID = mysqli_fetch_assoc(mysqli_query($con2,"SELECT Email FROM Users WHERE VP = '1' LIMIT 1"));
+	$to = $getID["Email"];
+	$MailSubject = "ProDev - New Activity for VP Approval";
+	$message = "ProDev - New Activity for VP Approval";
+	$headers = "From: CCA_ProDev" . "\r\n" .
+	"CC: alnye655321@gmail.com";
+	mail($to, $MailSubject, $message,$headers);	
+	//close email
 	}
 
 if(!empty($VP)){
@@ -200,6 +222,7 @@ return json_encode($return);
 }
 $ajaxValidate = new ajaxValidate;
 echo $ajaxValidate->formValidate();
+
 }
 // Close Pending Activity Submit/Deny
 

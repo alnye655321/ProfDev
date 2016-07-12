@@ -6,7 +6,7 @@ if(isset($_COOKIE["ID_Data"]))
 	function email($to, $cc, $MailSubject, $message){
 	
 		// In case any of our lines are larger than 70 characters, we should use wordwrap()
-		$message = wordwrap($message, 70, "\r\n");					
+		//$message = wordwrap($message, 70, "\r\n");					
 		$headers = "From: CCA_ProfDev" . "\r\n" .
 		"CC: $cc";
 		// Send
