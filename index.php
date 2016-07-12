@@ -30,6 +30,24 @@ function getChairName($SNum) {
 	}
 }
 
+function getDepts($SNum){
+//creates sql request that only pulls pending activities within the chair's prefix list
+	global $con2;
+	$result = mysqli_query($con2,"SELECT * FROM Users WHERE SNum = '$SNum'");
+	$row = mysqli_fetch_array($result);
+	$Depts = $row['Depts'];	
+	$sql ="";
+	$deptsplit=explode(" ",$Depts); //create array from Dept string ex) "AAA HIS PSY WST"
+	foreach($deptsplit as $value) {
+		$sql = $sql . "Prefix = " . "'$value'" . " || "; //iterate through prefix array values, adding sql commmands or
+	}
+	$sql = rtrim($sql, " |"); //rtrim targets end of line - gets rid of extra space and | added from for loop above
+	$sql =  "SELECT * FROM Activity WHERE Chair is NULL AND " . "(" . $sql . ")";
+	return $sql;
+	//output example: SELECT * FROM Activity WHERE Chair is NULL AND (Prefix = 'AAA' || Prefix = 'HIS' || Prefix = 'PSY' || Prefix = 'WST')
+	
+}
+
 // Set User Role Info
 $result = mysqli_query($con2,"SELECT * FROM Users WHERE SNum = '$user'");
 while($row = mysqli_fetch_array($result)){
@@ -689,6 +707,7 @@ if($Display == "Pending"){
 			<th>Info</th>
 			<th>SNum</th>
 			<th>Name</th>
+			<th>Prefix</th>
 			<th>Type</th>
 			<!--<th class="filter-select filter-exact" data-placeholder="Pick a gender">Sex</th>-->
 			<th>Item</th>
@@ -705,6 +724,7 @@ if($Display == "Pending"){
 			<th>Info</th>
 			<th>SNum</th>
 			<th>Name</th>
+			<th>Prefix</th>
 			<th>Type</th>
 			<!--<th>Sex</th>-->
 			<th>Item</th>
@@ -716,7 +736,7 @@ if($Display == "Pending"){
 			<th>Dean</th>
 			</tr>
 		<tr>
-			<th colspan="12" class="ts-pager form-horizontal">
+			<th colspan="13" class="ts-pager form-horizontal">
 				<button type="button" class="btn first"><i class="icon-step-backward glyphicon glyphicon-step-backward"></i></button>
 				<button type="button" class="btn prev"><i class="icon-arrow-left glyphicon glyphicon-backward"></i></button>
 				<span class="pagedisplay"></span> <!-- this can be any element, including an input -->
@@ -738,21 +758,26 @@ if($Display == "Pending"){
 if($_SESSION["role"] == "VP") {
 	$result = mysqli_query($con,"SELECT * FROM Activity WHERE VP is NULL");
 }
-	else if (!empty($SNum)){
-		$result = mysqli_query($con,"SELECT * FROM Activity WHERE SNum = '$SNum' AND VP is NULL");
+
+	else if($_SESSION["role"] == "chair") {
+		$result = mysqli_query($con,getDepts($user));
 	}
-	
-		else if(!empty($nameSearch)) {
-			$result = mysqli_query($con,"SELECT * FROM Activity WHERE LastName = '$LastName' AND  FirstName = '$FirstName' AND VP is NULL");
+
+		else if (!empty($SNum)){
+			$result = mysqli_query($con,"SELECT * FROM Activity WHERE SNum = '$SNum' AND VP is NULL");
 		}
 		
-			else if($_SESSION["role"] == "dean") {
-				$result = mysqli_query($con,"SELECT * FROM Activity WHERE Override = '0'");
+			else if(!empty($nameSearch)) {
+				$result = mysqli_query($con,"SELECT * FROM Activity WHERE LastName = '$LastName' AND  FirstName = '$FirstName' AND VP is NULL");
 			}
-		
-				else {
-					$result = mysqli_query($con,"SELECT * FROM Activity WHERE Prefix = '$dept' AND VP is NULL");
+			
+				else if($_SESSION["role"] == "dean") {
+					$result = mysqli_query($con,"SELECT * FROM Activity WHERE Override = '0'");
 				}
+			
+					else {
+						$result = mysqli_query($con,"SELECT * FROM Activity WHERE Prefix = '$dept' AND VP is NULL");
+					}
 
 // Table Body SQL Select
 	while($row = mysqli_fetch_array($result))
@@ -771,6 +796,7 @@ if($_SESSION["role"] == "VP") {
 		echo "</td>";
 		echo "<td>" . $row['SNum'] . "</td>";
 		echo '<td>'.$row['LastName'].', '. $row['FirstName'].'</td>';
+		echo "<td>" . $row['Prefix'] . "</td>";
 		echo "<td>" . $row['Type'] . "</td>";
 		echo "<td>" . $row['Item'] . "</td>";
 		echo "<td>" . $row['Date'] . "</td>";
@@ -913,7 +939,7 @@ echo '</table></div>';
 <div class="container">
 
   <div class="page-header">
-        <h1>Panels</h1>
+        <h1>Info</h1>
       </div>
       <div class="row">
         <div class="col-sm-4">
