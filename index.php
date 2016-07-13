@@ -582,6 +582,7 @@ echo '<script>document.getElementById("'.$Display.'").className = "btn btn-prima
 	echo '<div id="demo"><table> 
 	<thead>
 		<tr>
+			<th>Info</th>
 			<th>SNum</th>
 			<th>Name</th>
 			<th>Level</th>
@@ -597,6 +598,7 @@ echo '<script>document.getElementById("'.$Display.'").className = "btn btn-prima
 	</thead>
 	<tfoot>
 		<tr>
+			<th>Info</th>
 			<th>SNum</th>
 			<th>Name</th>
 			<th>Level</th>
@@ -610,7 +612,7 @@ echo '<script>document.getElementById("'.$Display.'").className = "btn btn-prima
 			<th>ChairRec(3)</th>
 		</tr>
 		<tr>
-			<th colspan="11" class="ts-pager form-horizontal">
+			<th colspan="12" class="ts-pager form-horizontal">
 				<button type="button" class="btn first"><i class="icon-step-backward glyphicon glyphicon-step-backward"></i></button>
 				<button type="button" class="btn prev"><i class="icon-arrow-left glyphicon glyphicon-backward"></i></button>
 				<span class="pagedisplay"></span> <!-- this can be any element, including an input -->
@@ -672,6 +674,11 @@ $UnCheckImage = '<span style="font-size:1.5em; color:red;" class="glyphicon glyp
 		$EditImage3 = '<form class="changeCursor1"><input type="hidden" name="modalCheckLev3" type="text" value="true"><input type="hidden" name="SNum" type="text" value="'.$row['SNum'].'">
 			<span id="'.$checkID3.'" style="font-size:1.5em; color:blue;" class="glyphicon glyphicon-folder-open"></span></form>';
 		echo "<tr>";
+		echo "<td>";
+			echo '<form class="changeCursor1"><input type="hidden" name="SNum" type="text" value="'.$row['SNum'].'">
+			<input type="hidden" name="lvl_info_gen" type="text" value="true">
+			<img class="changeCursor" src="images/transp-inf.png" /></form>';
+		echo "</td>";
 		echo "<td style='font-size:1.5em;'>" . $row['SNum'] . "</td>";
 		echo '<td >'.$row['LastName'].', '. $row['FirstName'].'</td>';
 		echo "<td style='font-size:1.5em;'>";
@@ -1119,6 +1126,35 @@ echo '</table></div>';
 </div>
 <!--Close Modal Override-->
 
+<!--Modal Level Info (in)active set-->
+<div id="myModal2" class="modal fade" tabindex="-1" role="dialog">
+
+<div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">Active Status</h4>
+      </div>
+      <div class="modal-body">
+<form class="modalSubmit">
+
+
+
+<div id="replace2"></div>
+
+<input type="hidden" name="lvl_info_submit" type="text" value="true">
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="submit" id="modalButton" class="btn btn-primary">Save changes</button></form>
+      </div>
+    </div>
+  </div>
+
+</div>
+<!--Close Modal Level Info (in)active set-->
+
 <!-- Pending Approval AJAX -->	
 	<script>
 	$('.form1').change(function(event) {
@@ -1177,6 +1213,7 @@ echo '</table></div>';
 			success: function (data) {
 				console.log(data);
 				if(data.type == 'Info') {$('#replace').html(data.msg); $('#myModal').modal('show');}
+				if(data.type == 'lvl_info') {$('#replace2').html(data.msg); $('#myModal2').modal('show');}
 				
 				
 			}
@@ -1205,7 +1242,8 @@ $('.modalSubmit').submit(function(event) {
 						$('#' + SNumID).removeClass('glyphicon glyphicon-folder-open').addClass('glyphicon glyphicon-check').css('color','green');
 						}
 					
-					$('#myModal').modal('hide');		
+					$('#myModal').modal('hide');	
+					$('#myModal2').modal('hide');	
 				
 			}
 		});

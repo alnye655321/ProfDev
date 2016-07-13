@@ -124,6 +124,10 @@ $modalSubmit = @$_POST['modalSubmit'];
 $levelOverride = @$_POST['levelOverride'];
 $payrollVP = @$_POST['payrollVP'];
 $payrollHR = @$_POST['payrollHR'];
+$lvl_info_gen = @$_POST['lvl_info_gen'];
+$lvl_info_submit = @$_POST['lvl_info_submit'];
+
+
 
 // Pending Activity Submit/Deny
 if($pendingCheck == "true")
@@ -487,6 +491,93 @@ $ajaxValidate = new ajaxValidate;
 echo $ajaxValidate->formValidate();
 }
 //Close Payroll Submit
+
+
+// Modal AJAX Generate Level Info - change (in)active
+if($lvl_info_gen == "true")
+{
+
+class ajaxValidate {
+function formValidate() {
+
+global $con;
+$SNum = @$_POST['SNum'];
+
+              
+//Establish values that will be returned via ajax
+$return = array();
+$return['msg'] = '';
+
+ 
+$return['error'] = false;
+
+	//Additional Info
+		$return['type'] = 'lvl_info';
+
+
+
+$result = mysqli_query($con,"SELECT Inactive FROM Level WHERE SNum = '$SNum'"); //check if all chair rec values are present
+while($row = mysqli_fetch_array($result)) {
+$inactiveCheck = $row['Inactive'];
+}
+
+if($inactiveCheck == 1) {
+	$checkedCheck = " checked";
+}
+else {
+	$checkedCheck = " ";
+}
+
+//Return json encoded results
+
+	$return['msg'] = '<div class="checkbox"><label><input type="checkbox" value="true" name="Inactive"'.$checkedCheck.'>Inactive</label></div>
+	<input type="hidden" name="SNum" type="text" value="'.$SNum.'">';
+
+
+
+	return json_encode($return);
+
+
+
+
+  }
+}
+$ajaxValidate = new ajaxValidate;
+echo $ajaxValidate->formValidate();
+}
+//Close Modal AJAX Generate Level Info - change (in)active
+
+
+// Modal AJAX Submit Level Info - change (in)active Form
+if($lvl_info_submit == "true")
+{
+
+class ajaxValidate {
+function formValidate() {
+
+global $con;
+$SNum = @$_POST['SNum'];
+$Inactive = @$_POST['Inactive'];
+                
+//Establish values that will be returned via ajax
+$return = array();
+$return['msg'] = '';
+$return['type'] = '';
+$return['SNumID'] = '';
+ 
+$return['error'] = false;
+
+if($Inactive == "true") {mysqli_query($con,"UPDATE Level SET Inactive = '1' WHERE SNum = '$SNum'");}
+else{mysqli_query($con,"UPDATE Level SET Inactive = NULL WHERE SNum = '$SNum'");}
+
+	return json_encode($return);
+
+  }
+}
+$ajaxValidate = new ajaxValidate;
+echo $ajaxValidate->formValidate();
+}
+//Close Modal AJAX Submit Level Info - change (in)active Form
 
 
 ?>
