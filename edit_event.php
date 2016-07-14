@@ -44,12 +44,12 @@ if($_POST['deleteName'] == "true") {
 	$Regs = $getID["Regs"]; // find S#s of database saved registrants
 	$SNumDelete = $_POST['SNumDelete'] . " "; //get S# plus space to be removed from panel form button
 	$newRegs = str_replace($SNumDelete, "", $Regs, $count); //remove S# from string
-	
+
 	if($count == 0){ // if replace count is zero, means that it is last record (without trailing space)
 		$SNumDelete = " " . $_POST['SNumDelete']; //add preceding space
 		$newRegs = str_replace($SNumDelete, "", $Regs, $count); // then remove
 		}
-		
+
 	mysqli_query($con,"UPDATE Events SET Regs = '$newRegs' WHERE id = '$id'");
 }
 //Close Delete Name
@@ -60,7 +60,7 @@ if($proposeSubmit == "true") {
 	$Regs = $getID["Regs"];
 	$arraySplit = implode(" ", $_SESSION["namesAdd"]); //implode saved S#s into string
 
-		if($Regs == NULL) {		
+		if($Regs == NULL) {
 			mysqli_query($con,"UPDATE Events SET Regs = '$arraySplit' WHERE id = '$id'");
 			$_SESSION["namesAdd"] = array(); //reset saved S#s
 		}
@@ -83,12 +83,12 @@ if(!empty($searchSNum)){
 	$FirstName = $getID["FirstName"];
 	$SNum = $searchSNum;
 	//array_push($_SESSION["namesAdd"],$SNum);
-	
+
 	$getID = mysqli_fetch_assoc(mysqli_query($con,"SELECT * FROM Events WHERE id = '$id'"));
 	$Regs = $getID["Regs"];
 	//$arraySplit = implode(" ", $_SESSION["namesAdd"]); //implode saved S#s into string
 
-		if($Regs == NULL) {		
+		if($Regs == NULL) {
 			mysqli_query($con,"UPDATE Events SET Regs = '$SNum' WHERE id = '$id'");
 			//$_SESSION["namesAdd"] = array(); //reset saved S#s
 		}
@@ -97,23 +97,23 @@ if(!empty($searchSNum)){
 			mysqli_query($con,"UPDATE Events SET Regs = '$new' WHERE id = '$id'");
 			//$_SESSION["namesAdd"] = array(); //reset saved S#s
 		}
-	
+
 }
 
 if(!empty($nameSearch)){
 	$splitFirst = explode(", ", $nameSearch);
 	$LastName = $splitFirst[0];
 	$FirstName = $splitFirst[1];
-	
+
 	$getID = mysqli_fetch_assoc(mysqli_query($con,"SELECT DISTINCT SNum FROM TeachingInfo WHERE LastName = '$LastName' AND FirstName = '$FirstName'"));
 	$SNum = $getID["SNum"];
 	//array_push($_SESSION["namesAdd"],$SNum);
-	
+
 	$getID = mysqli_fetch_assoc(mysqli_query($con,"SELECT * FROM Events WHERE id = '$id'"));
 	$Regs = $getID["Regs"];
 	//$arraySplit = implode(" ", $_SESSION["namesAdd"]); //implode saved S#s into string
 
-		if($Regs == NULL) {		
+		if($Regs == NULL) {
 			mysqli_query($con,"UPDATE Events SET Regs = '$SNum' WHERE id = '$id'");
 			//$_SESSION["namesAdd"] = array(); //reset saved S#s
 		}
@@ -139,14 +139,14 @@ $Complete = $getID["Complete"];
 <head>
 	<meta charset="utf-8">
 	<title>Edit Event</title>
-	
+
 
 
 	<!-- jQuery -->
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 	<script src="js/tether.min.js"></script>
 	<script src="js/bootstrap.min.js"></script>
-	
+
 
 	<!-- Demo stuff -->
 	<link rel="stylesheet" href="css/jq.css">
@@ -170,7 +170,7 @@ $Complete = $getID["Complete"];
 
 	<link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
 	<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
-	
+
 	<script>
 	$(function() {
 	    $( "#nameSearch" ).autocomplete({
@@ -179,7 +179,7 @@ $Complete = $getID["Complete"];
 	    });
 	});
 	</script>
-	
+
 
 <!-- /jQuery UI autocomplete -->
 
@@ -251,35 +251,35 @@ $(document).ready(function(){
             <div class="input-group-btn">
                 <button class="btn btn-default" type="submit"><i class="glyphicon glyphicon-search"></i></button>
             </div>
-        </div>        
+        </div>
      </form></div>
-     
+
  <div class="col-md-3"><form method="post" action="edit_event.php">
      <div class="input-group">
          <input type="text" class="form-control ui-widget" placeholder="Search SNum" name="searchSNum" id="searchSNum">
          <div class="input-group-btn">
              <button class="btn btn-default" type="submit"><i class="glyphicon glyphicon-search"></i></button>
          </div>
-     </div>    
+     </div>
   </form></div>
-  
+
    <div class="col-md-3"><form method="post" action="edit_event.php">
      <div class="input-group">
          <textarea class="form-control" rows="3" name="SNumImport">Import list of S#s </textarea>
          <div class="input-group-btn">
              <button class="btn btn-default" type="submit"><i class="glyphicon glyphicon-search"></i></button>
          </div>
-     </div>     
+     </div>
   </form></div>
 
 
 	<div class="col-md-3">
 		<?php
 		if($Complete == NULL){
-		
+
 		echo '<form method="post" action="events.php">';
 		echo '<input type="hidden" name="completeEvent" type="text" value="true">';
-		echo '<input type="hidden" name="id" type="text" value="'.$id.'">'; 
+		echo '<input type="hidden" name="id" type="text" value="'.$id.'">';
 		echo '<button type="submit" class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title="No further addition of attendees">Complete/Close Event</button></form>';
 		}
 		?>
@@ -292,52 +292,61 @@ $(document).ready(function(){
 <div class="container">
 
   <div class="page-header">
-        <h1>Attending</h1>
+      <?php if($Complete == NULL){echo '<h1>Attending</h1>';} else{echo '<h1>Attended</h1>';} ?>
       </div>
       <div class="row">
 
         <!--transfer button-->
         <div class="col-sm-2"> <!--transfer button proposed to attending OR "X" if event is already complete-->
-        <?php  
-			if($Complete == NULL){
-			echo  '<span class="glyphicon glyphicon-arrow-right" style="cursor:pointer; font-size:6em; display: block; text-align:center; color:blue;" 
-			onclick="document.getElementById(\'submitForm\').submit();"></span>';
+        <?php
+			if($Complete != NULL){ //if finished event display a green check and tooltip
+				echo  '<span class="glyphicon glyphicon-check" data-toggle="tooltip" data-placement="bottom" title="Event is Complete"
+				style="font-size:6em; display: block; text-align:center; color:green;"></span>';
+
 			}
-			else{
-			echo  '<span class="glyphicon glyphicon-remove" style="font-size:6em; display: block; text-align:center; color:red;"></span>';
-			}
-        
-        ?>       
-    
+
+        ?>
+
         </div>
-        
+
         <div class="col-sm-10">  <!--Attending Panel Start-->
           <div class="panel panel-success">
             <div class="panel-heading">
               <h3 class="panel-title">Attending</h3>
             </div>
             <div class="panel-body">
-                            
+
 					<ul class="list-group">
-						<?php 
+						<?php
 						$getID = mysqli_fetch_assoc(mysqli_query($con,"SELECT * FROM Events WHERE id = '$id'"));
 						$Regs = $getID["Regs"];
-						$arrayJoin = explode(" ", $Regs); //explode saved S#s into array     
-						foreach ($arrayJoin as $SNumX) {
-							echo '<li class="list-group-item"><form method="post" action="edit_event.php"><div class="input-group">'; displayName($SNumX); 
-								echo '<input type="hidden" name="deleteName" type="text" value="true">
-								<input type="hidden" name="SNumDelete" type="text" value="'.$SNumX.'">
-								<div class="input-group-btn"> <button  class="btn btn-default" type="submit"><i class="glyphicon glyphicon-minus" style="font-size:1em; color:red;"></i></button></div>
-								</div></form>';					
-						
-							echo '</li>';
+						$arrayJoin = explode(" ", $Regs); //explode saved S#s into array
+
+						if($Complete == NULL){ //if event isn't complete allow removing of attendees
+							foreach ($arrayJoin as $SNumX) {
+								echo '<li class="list-group-item"><form method="post" action="edit_event.php"><div class="input-group">'; displayName($SNumX);
+									echo '<input type="hidden" name="deleteName" type="text" value="true">
+									<input type="hidden" name="SNumDelete" type="text" value="'.$SNumX.'">
+									<div class="input-group-btn"> <button  class="btn btn-default" type="submit"><i class="glyphicon glyphicon-minus" style="font-size:1em; color:red;"></i></button></div>
+									</div></form>';
+
+								echo '</li>';
+							}
 						}
-						
+						else {
+							foreach ($arrayJoin as $SNumX) { //if event is complete do not allow removal of attendees
+								echo '<li class="list-group-item">';
+								echo displayName($SNumX);
+								echo '</li>';
+							}
+
+						}
+
 						?>
-					</ul>         
-              
-      
-              
+					</ul>
+
+
+
           </div>
 
         </div>
@@ -355,5 +364,3 @@ $(document).ready(function(){
 <?php echo "$SNumImport"; ?>
 </body>
 </html>
-
-
