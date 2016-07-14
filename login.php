@@ -39,7 +39,7 @@ include 'connect.php';
 			$hour = time() + 14400;
 			setcookie("ID_Data", $user, $hour);
 			//setcookie("Key_Data", $pass, $hour);
-			echo "<script> window.location.assign('index.php'); </script>";}
+			echo "<script> window.location.assign('ProfDev/index.php'); </script>";}
 
 
 
@@ -50,7 +50,7 @@ include 'connect.php';
 			$user = $user . "_" . $year;
 			setcookie("ID_Data", $user, $hour);
 			//setcookie("Key_Data", $pass, $hour);
-			echo "<script> window.location.assign('index1saf4543gdsfgdfg.php'); </script>";}
+			echo "<script> window.location.assign('index.php'); </script>";}
 
 }
 
