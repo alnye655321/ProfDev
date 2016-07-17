@@ -1,6 +1,6 @@
 <?php
 include 'id_verify.php'; //$user included as S# from cookie
-include '../connect.php';
+include 'connect.php';
 $SNum = $_POST['SNum'];
 $field = $_POST['field'];
 $levelOverride = $_POST['levelOverride'];
@@ -103,32 +103,32 @@ $Hours = $_POST['Hours'];
 $Comments = $_POST['Comments'];
 $Override = 0; // Override settings: 0 = proposed by chair; 1 = approved by dean
 
-$Item=mysqli_real_escape_string($con3, $Item);
+$Item=mysqli_real_escape_string($con, $Item);
 $Item = str_replace(",",";",$Item);
-$Date=mysqli_real_escape_string($con3, $Date);
+$Date=mysqli_real_escape_string($con, $Date);
 $Date = str_replace(",",";",$Date);
-$Sponsor=mysqli_real_escape_string($con3, $Sponsor);
+$Sponsor=mysqli_real_escape_string($con, $Sponsor);
 $Sponsor = str_replace(",",";",$Sponsor);
-$Hours=mysqli_real_escape_string($con3, $Hours);
+$Hours=mysqli_real_escape_string($con, $Hours);
 $Hours = str_replace(",",";",$Hours);
-$Comments=mysqli_real_escape_string($con3, $Comments);
+$Comments=mysqli_real_escape_string($con, $Comments);
 $Comments = str_replace(",",";",$Comments);
 
-$getID = mysqli_fetch_assoc(mysqli_query($con3,"SELECT DISTINCT Subject FROM TeachingInfo WHERE SNum = '$SNum' LIMIT 1"));
+$getID = mysqli_fetch_assoc(mysqli_query($con,"SELECT DISTINCT Subject FROM TeachingInfo WHERE SNum = '$SNum' LIMIT 1"));
 $Prefix = $getID["Subject"];
 
-$result = mysqli_query($con3,"SELECT id FROM Activity ORDER BY id DESC LIMIT 1");
+$result = mysqli_query($con,"SELECT id FROM Activity ORDER BY id DESC LIMIT 1");
 $row = mysqli_fetch_array($result);
 $id=$row['id'] + 1;
 
 $sql2 = "INSERT INTO Activity (id, SNum, LastName, FirstName, Type, Item, Date, Sponsor, Hours, Prefix, Comments, Override)
 VALUES ('$id','$SNum','$LastName','$FirstName','$Type','$Item','$Date','$Sponsor','$Hours','$Prefix','$Comments','$Override')";
 
-if (mysqli_query($con3, $sql2)){
+if (mysqli_query($con, $sql2)){
 
 	echo "New record created successfully";}
 	else {
-    echo "Error: " . $sql2 . "<br>" . mysqli_error($con3);}
+    echo "Error: " . $sql2 . "<br>" . mysqli_error($con);}
     
 // email to dean notice of override pending approval
 
@@ -137,7 +137,7 @@ if (mysqli_query($con3, $sql2)){
 // Form
 if($levelOverride == "true"){
 
-$getID = mysqli_fetch_assoc(mysqli_query($con3,"SELECT DISTINCT LastName, FirstName FROM TeachingInfo WHERE SNum = '$SNum'"));
+$getID = mysqli_fetch_assoc(mysqli_query($con,"SELECT DISTINCT LastName, FirstName FROM TeachingInfo WHERE SNum = '$SNum'"));
 $LastName = $getID["LastName"];
 $FirstName = $getID["FirstName"];
 

@@ -84,7 +84,7 @@ if($Display == "Activity")
 if (!empty($Display)) {
 echo '<script>document.getElementById("'.$Display.'").className = "btn btn-primary btn-block active";</script>';
 // Table Body SQL Select
-$result = mysqli_query($con3,"SELECT * FROM Activity WHERE Prefix = '$dept'");
+$result = mysqli_query($con,"SELECT * FROM Activity WHERE Prefix = '$dept'");
 	while($row = mysqli_fetch_array($result))
 	{
 		echo "<tr>";
@@ -102,7 +102,7 @@ $result = mysqli_query($con3,"SELECT * FROM Activity WHERE Prefix = '$dept'");
 
 if (!empty($SNum)) {
 // Table Body SQL Select
-$result = mysqli_query($con3,"SELECT * FROM Activity WHERE SNum = '$SNum'");
+$result = mysqli_query($con,"SELECT * FROM Activity WHERE SNum = '$SNum'");
 	while($row = mysqli_fetch_array($result))
 	{
 		echo "<tr>";

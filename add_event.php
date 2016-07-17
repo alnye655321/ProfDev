@@ -1,6 +1,6 @@
 <?php
 include 'id_verify.php'; //$user included as S# from cookie
-include '../connect.php';
+include 'connect.php';
 $SNum = "S02064117";
 $formSubmit = $_POST['formSubmit'];
 
@@ -125,21 +125,21 @@ $Comments = $_POST['Comments'];
 
 if(!empty($Other)){$Type = $_POST['Other'];} // check if other is empty for type
 
-$Comments=mysqli_real_escape_string($con3, $Comments);
+$Comments=mysqli_real_escape_string($con, $Comments);
 $Comments = str_replace(",",";",$Comments);
 
-$result = mysqli_query($con3,"SELECT id FROM Events ORDER BY id DESC LIMIT 1");
+$result = mysqli_query($con,"SELECT id FROM Events ORDER BY id DESC LIMIT 1");
 $row = mysqli_fetch_array($result);
 $id=$row['id'] + 1;
 
 $sql2 = "INSERT INTO Events (id, SNum, Type, Item, Date, Sponsor, Hours, Comments)
 VALUES ('$id','$SNum','$Type','$Item','$Date','$Sponsor','$Hours','$Comments')";
 
-if (mysqli_query($con3, $sql2)){
+if (mysqli_query($con, $sql2)){
 
 	echo "New record created successfully";}
 	else {
-    echo "Error: " . $sql2 . "<br>" . mysqli_error($con3);
+    echo "Error: " . $sql2 . "<br>" . mysqli_error($con);
 }
 
 }

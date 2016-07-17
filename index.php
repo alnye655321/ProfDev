@@ -1,22 +1,22 @@
 <?php
 include 'id_verify.php'; //$user included as S# from cookie
-include '../connect.php';
+include 'connect.php';
 
 function levelNumber($SNum) {
-	global $con3;
-	$getID = mysqli_fetch_assoc(mysqli_query($con3,"SELECT Level FROM Level WHERE SNum = '$SNum'"));
+	global $con;
+	$getID = mysqli_fetch_assoc(mysqli_query($con,"SELECT Level FROM Level WHERE SNum = '$SNum'"));
 	$level = $getID["Level"];
 	echo $level;
 }
 
 function getChairName($SNum) {
-	global $con3;
-	global $con32;
+	global $con;
+	global $con2;
 
-	$getID = mysqli_fetch_assoc(mysqli_query($con3,"SELECT DISTINCT Subject FROM TeachingInfo WHERE SNum = '$SNum' LIMIT 1"));
+	$getID = mysqli_fetch_assoc(mysqli_query($con,"SELECT DISTINCT Subject FROM TeachingInfo WHERE SNum = '$SNum' LIMIT 1"));
 	$Prefix = $getID["Subject"];
 
-	$result = mysqli_query($con32,"SELECT Depts, Name FROM Users WHERE Chair = '1'");
+	$result = mysqli_query($con2,"SELECT Depts, Name FROM Users WHERE Chair = '1'");
 
 	while($row = mysqli_fetch_array($result))	{
 		$prefixList = $row['Depts']; $Name = $row['Name'];
@@ -32,8 +32,8 @@ function getChairName($SNum) {
 
 function getDepts($SNum){
 //creates sql request that only pulls pending activities within the chair's prefix list
-	global $con32;
-	$result = mysqli_query($con32,"SELECT * FROM Users WHERE SNum = '$SNum'");
+	global $con2;
+	$result = mysqli_query($con2,"SELECT * FROM Users WHERE SNum = '$SNum'");
 	$row = mysqli_fetch_array($result);
 	$Depts = $row['Depts'];
 	$sql ="";
@@ -49,7 +49,7 @@ function getDepts($SNum){
 }
 
 // Set User Role Info
-$result = mysqli_query($con32,"SELECT * FROM Users WHERE SNum = '$user'");
+$result = mysqli_query($con2,"SELECT * FROM Users WHERE SNum = '$user'");
 while($row = mysqli_fetch_array($result)){
 
 	if($row['Chair'] == 1) {
@@ -78,34 +78,34 @@ while($row = mysqli_fetch_array($result)){
 // Admin - change role to...
 if($_POST['ChairChange'] && $_SESSION["admin"] == true) {
 	$_SESSION["role"] = "chair";
-	mysqli_query($con32,"UPDATE Users SET Chair = '1' WHERE SNum = '$user'");
-	mysqli_query($con32,"UPDATE Users SET VP = NULL WHERE SNum = '$user'");
-	mysqli_query($con32,"UPDATE Users SET Dean = NULL WHERE SNum = '$user'");
-	mysqli_query($con32,"UPDATE Users SET Payroll = NULL WHERE SNum = '$user'");
+	mysqli_query($con2,"UPDATE Users SET Chair = '1' WHERE SNum = '$user'");
+	mysqli_query($con2,"UPDATE Users SET VP = NULL WHERE SNum = '$user'");
+	mysqli_query($con2,"UPDATE Users SET Dean = NULL WHERE SNum = '$user'");
+	mysqli_query($con2,"UPDATE Users SET Payroll = NULL WHERE SNum = '$user'");
 }
 
 if($_POST['VPChange'] && $_SESSION["admin"] == true) {
 	$_SESSION["role"] = "VP";
-	mysqli_query($con32,"UPDATE Users SET Chair = NULL WHERE SNum = '$user'");
-	mysqli_query($con32,"UPDATE Users SET VP = '1' WHERE SNum = '$user'");
-	mysqli_query($con32,"UPDATE Users SET Dean = NULL WHERE SNum = '$user'");
-	mysqli_query($con32,"UPDATE Users SET Payroll = NULL WHERE SNum = '$user'");
+	mysqli_query($con2,"UPDATE Users SET Chair = NULL WHERE SNum = '$user'");
+	mysqli_query($con2,"UPDATE Users SET VP = '1' WHERE SNum = '$user'");
+	mysqli_query($con2,"UPDATE Users SET Dean = NULL WHERE SNum = '$user'");
+	mysqli_query($con2,"UPDATE Users SET Payroll = NULL WHERE SNum = '$user'");
 }
 
 if($_POST['DeanChange'] && $_SESSION["admin"] == true) {
 	$_SESSION["role"] = "dean";
-	mysqli_query($con32,"UPDATE Users SET Chair = NULL WHERE SNum = '$user'");
-	mysqli_query($con32,"UPDATE Users SET VP = NULL WHERE SNum = '$user'");
-	mysqli_query($con32,"UPDATE Users SET Dean = '1' WHERE SNum = '$user'");
-	mysqli_query($con32,"UPDATE Users SET Payroll = NULL WHERE SNum = '$user'");
+	mysqli_query($con2,"UPDATE Users SET Chair = NULL WHERE SNum = '$user'");
+	mysqli_query($con2,"UPDATE Users SET VP = NULL WHERE SNum = '$user'");
+	mysqli_query($con2,"UPDATE Users SET Dean = '1' WHERE SNum = '$user'");
+	mysqli_query($con2,"UPDATE Users SET Payroll = NULL WHERE SNum = '$user'");
 }
 
 if($_POST['PayrollChange'] && $_SESSION["admin"] == true) {
 	$_SESSION["role"] = "payroll";
-	mysqli_query($con32,"UPDATE Users SET Chair = NULL WHERE SNum = '$user'");
-	mysqli_query($con32,"UPDATE Users SET VP = NULL WHERE SNum = '$user'");
-	mysqli_query($con32,"UPDATE Users SET Dean = NULL WHERE SNum = '$user'");
-	mysqli_query($con32,"UPDATE Users SET Payroll = '1' WHERE SNum = '$user'");
+	mysqli_query($con2,"UPDATE Users SET Chair = NULL WHERE SNum = '$user'");
+	mysqli_query($con2,"UPDATE Users SET VP = NULL WHERE SNum = '$user'");
+	mysqli_query($con2,"UPDATE Users SET Dean = NULL WHERE SNum = '$user'");
+	mysqli_query($con2,"UPDATE Users SET Payroll = '1' WHERE SNum = '$user'");
 }
 
 // Close Admin - change role to...
@@ -375,7 +375,7 @@ cursor:pointer;
   echo '<option value="'.$dept.'">'.$dept.'</option>';
 }
   //$deptList = "AAA ASE ACC ANT ART ASL AST BIO BTE BUS CCR CHE CIS CNG COM CRJ CSC CWB DAN DPM ECE ECO EDU EGG EMS ENG ESL ETH FST FVM GEO GEY HIS HPR HUM HWE JRD LEA LIT MAN MAR MAT MGD MUS NUA PAR PED PHI PHY POS PSM PSY REE SCI SOC SPA THE TRI WST";
-	$result = mysqli_query($con32,"SELECT * FROM Users WHERE SNum = '$user'"); // get Dept list from Users table
+	$result = mysqli_query($con2,"SELECT * FROM Users WHERE SNum = '$user'"); // get Dept list from Users table
 	$row = mysqli_fetch_array($result);
 	$Depts = $row['Depts'];
 	$deptsplit=explode(" ",$Depts);//split into array and run options with each 3 letter subject prefix

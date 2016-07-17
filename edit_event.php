@@ -1,6 +1,6 @@
 <?php
 include 'id_verify.php'; //$user included as S# from cookie
-include '../connect.php';
+include 'connect.php';
 
 
 
@@ -22,8 +22,8 @@ if(empty($_SESSION['namesAdd'])){$_SESSION["namesAdd"] = array();}
 
 //Display pending names function
 function displayName($SNumVal) {
-	global $con3;
-	$getID = mysqli_fetch_assoc(mysqli_query($con3,"SELECT DISTINCT LastName, FirstName FROM TeachingInfo WHERE SNum = '$SNumVal'"));
+	global $con;
+	$getID = mysqli_fetch_assoc(mysqli_query($con,"SELECT DISTINCT LastName, FirstName FROM TeachingInfo WHERE SNum = '$SNumVal'"));
 	$LastName = $getID["LastName"];
 	$FirstName = $getID["FirstName"];
 	$name = $LastName . ", " . $FirstName;
@@ -40,7 +40,7 @@ if($proposeCancel == "true") {
 
 //Delete Name
 if($_POST['deleteName'] == "true") {
-	$getID = mysqli_fetch_assoc(mysqli_query($con3,"SELECT * FROM Events WHERE id = '$id'"));
+	$getID = mysqli_fetch_assoc(mysqli_query($con,"SELECT * FROM Events WHERE id = '$id'"));
 	$Regs = $getID["Regs"]; // find S#s of database saved registrants
 	$SNumDelete = $_POST['SNumDelete'] . " "; //get S# plus space to be removed from panel form button
 	$newRegs = str_replace($SNumDelete, "", $Regs, $count); //remove S# from string
@@ -50,23 +50,23 @@ if($_POST['deleteName'] == "true") {
 		$newRegs = str_replace($SNumDelete, "", $Regs, $count); // then remove
 		}
 
-	mysqli_query($con3,"UPDATE Events SET Regs = '$newRegs' WHERE id = '$id'");
+	mysqli_query($con,"UPDATE Events SET Regs = '$newRegs' WHERE id = '$id'");
 }
 //Close Delete Name
 
 // SQL Send
 if($proposeSubmit == "true") {
-	$getID = mysqli_fetch_assoc(mysqli_query($con3,"SELECT * FROM Events WHERE id = '$id'"));
+	$getID = mysqli_fetch_assoc(mysqli_query($con,"SELECT * FROM Events WHERE id = '$id'"));
 	$Regs = $getID["Regs"];
 	$arraySplit = implode(" ", $_SESSION["namesAdd"]); //implode saved S#s into string
 
 		if($Regs == NULL) {
-			mysqli_query($con3,"UPDATE Events SET Regs = '$arraySplit' WHERE id = '$id'");
+			mysqli_query($con,"UPDATE Events SET Regs = '$arraySplit' WHERE id = '$id'");
 			$_SESSION["namesAdd"] = array(); //reset saved S#s
 		}
 		else {
 			$new = $Regs . " " . $arraySplit; //add to end of existing database S#s
-			mysqli_query($con3,"UPDATE Events SET Regs = '$new' WHERE id = '$id'");
+			mysqli_query($con,"UPDATE Events SET Regs = '$new' WHERE id = '$id'");
 			$_SESSION["namesAdd"] = array(); //reset saved S#s
 		}
 
@@ -75,26 +75,26 @@ if($proposeSubmit == "true") {
 
 if(!empty($searchSNum)){
 
-//$result = mysqli_query($con3,"SELECT DISTINCT LastName, FirstName FROM TeachingInfo WHERE SNum = '$SNum'");
+//$result = mysqli_query($con,"SELECT DISTINCT LastName, FirstName FROM TeachingInfo WHERE SNum = '$SNum'");
 
 	// retrieving single MySQL record. valu = Column name
-	$getID = mysqli_fetch_assoc(mysqli_query($con3,"SELECT DISTINCT LastName, FirstName FROM TeachingInfo WHERE SNum = '$SNum'"));
+	$getID = mysqli_fetch_assoc(mysqli_query($con,"SELECT DISTINCT LastName, FirstName FROM TeachingInfo WHERE SNum = '$SNum'"));
 	$LastName = $getID["LastName"];
 	$FirstName = $getID["FirstName"];
 	$SNum = $searchSNum;
 	//array_push($_SESSION["namesAdd"],$SNum);
 
-	$getID = mysqli_fetch_assoc(mysqli_query($con3,"SELECT * FROM Events WHERE id = '$id'"));
+	$getID = mysqli_fetch_assoc(mysqli_query($con,"SELECT * FROM Events WHERE id = '$id'"));
 	$Regs = $getID["Regs"];
 	//$arraySplit = implode(" ", $_SESSION["namesAdd"]); //implode saved S#s into string
 
 		if($Regs == NULL) {
-			mysqli_query($con3,"UPDATE Events SET Regs = '$SNum' WHERE id = '$id'");
+			mysqli_query($con,"UPDATE Events SET Regs = '$SNum' WHERE id = '$id'");
 			//$_SESSION["namesAdd"] = array(); //reset saved S#s
 		}
 		else {
 			$new = $Regs . " " . $SNum; //add to end of existing database S#s
-			mysqli_query($con3,"UPDATE Events SET Regs = '$new' WHERE id = '$id'");
+			mysqli_query($con,"UPDATE Events SET Regs = '$new' WHERE id = '$id'");
 			//$_SESSION["namesAdd"] = array(); //reset saved S#s
 		}
 
@@ -105,27 +105,27 @@ if(!empty($nameSearch)){
 	$LastName = $splitFirst[0];
 	$FirstName = $splitFirst[1];
 
-	$getID = mysqli_fetch_assoc(mysqli_query($con3,"SELECT DISTINCT SNum FROM TeachingInfo WHERE LastName = '$LastName' AND FirstName = '$FirstName'"));
+	$getID = mysqli_fetch_assoc(mysqli_query($con,"SELECT DISTINCT SNum FROM TeachingInfo WHERE LastName = '$LastName' AND FirstName = '$FirstName'"));
 	$SNum = $getID["SNum"];
 	//array_push($_SESSION["namesAdd"],$SNum);
 
-	$getID = mysqli_fetch_assoc(mysqli_query($con3,"SELECT * FROM Events WHERE id = '$id'"));
+	$getID = mysqli_fetch_assoc(mysqli_query($con,"SELECT * FROM Events WHERE id = '$id'"));
 	$Regs = $getID["Regs"];
 	//$arraySplit = implode(" ", $_SESSION["namesAdd"]); //implode saved S#s into string
 
 		if($Regs == NULL) {
-			mysqli_query($con3,"UPDATE Events SET Regs = '$SNum' WHERE id = '$id'");
+			mysqli_query($con,"UPDATE Events SET Regs = '$SNum' WHERE id = '$id'");
 			//$_SESSION["namesAdd"] = array(); //reset saved S#s
 		}
 		else {
 			$new = $Regs . " " . $SNum; //add to end of existing database S#s
-			mysqli_query($con3,"UPDATE Events SET Regs = '$new' WHERE id = '$id'");
+			mysqli_query($con,"UPDATE Events SET Regs = '$new' WHERE id = '$id'");
 			//$_SESSION["namesAdd"] = array(); //reset saved S#s
 		}
 }
 
 // ************** Find a way to display comments!!!!!!!!!********************************
-$getID = mysqli_fetch_assoc(mysqli_query($con3,"SELECT * FROM Events WHERE id = '$id'"));
+$getID = mysqli_fetch_assoc(mysqli_query($con,"SELECT * FROM Events WHERE id = '$id'"));
 $Type = $getID["Type"];
 $Item = $getID["Item"];
 $Date = $getID["Date"];
@@ -318,7 +318,7 @@ $(document).ready(function(){
 
 					<ul class="list-group">
 						<?php
-						$getID = mysqli_fetch_assoc(mysqli_query($con3,"SELECT * FROM Events WHERE id = '$id'"));
+						$getID = mysqli_fetch_assoc(mysqli_query($con,"SELECT * FROM Events WHERE id = '$id'"));
 						$Regs = $getID["Regs"];
 						$arrayJoin = explode(" ", $Regs); //explode saved S#s into array
 

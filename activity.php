@@ -50,15 +50,15 @@ echo '<div id="demo"><table>
 
 
 if (!empty($SNum)){
-$result = mysqli_query($con3,"SELECT * FROM Activity WHERE SNum = '$SNum' AND VP IS NOT NULL");
+$result = mysqli_query($con,"SELECT * FROM Activity WHERE SNum = '$SNum' AND VP IS NOT NULL");
 }
 
 else if(!empty($nameSearch)) {
-  $result = mysqli_query($con3,"SELECT * FROM Activity WHERE LastName = '$LastName' AND  FirstName = '$FirstName' AND VP IS NOT NULL");
+  $result = mysqli_query($con,"SELECT * FROM Activity WHERE LastName = '$LastName' AND  FirstName = '$FirstName' AND VP IS NOT NULL");
 }
 
   else {
-    $result = mysqli_query($con3,"SELECT * FROM Activity WHERE Prefix = '$dept' AND VP IS NOT NULL AND Inactive IS NULL");
+    $result = mysqli_query($con,"SELECT * FROM Activity WHERE Prefix = '$dept' AND VP IS NOT NULL AND Inactive IS NULL");
   }
 //!!!!!!!!!!!!!! Add to type infoajax button <button type="submit" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-info-sign"></span></button>
 // Table Body SQL Select

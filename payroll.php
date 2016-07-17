@@ -42,11 +42,11 @@ echo '<div id="demo"><table>
 <tbody>';
 
 if($_SESSION["role"] == "VP") {
-$result = mysqli_query($con3,"SELECT * FROM Level WHERE levelIncreaseVP IS NULL AND PendingLevel IS NOT NULL");
+$result = mysqli_query($con,"SELECT * FROM Level WHERE levelIncreaseVP IS NULL AND PendingLevel IS NOT NULL");
 }
 
 if($_SESSION["role"] == "payroll") {
-$result = mysqli_query($con3,"SELECT * FROM Level WHERE levelIncreaseVP IS NOT NULL AND PendingLevel IS NOT NULL");
+$result = mysqli_query($con,"SELECT * FROM Level WHERE levelIncreaseVP IS NOT NULL AND PendingLevel IS NOT NULL");
 }
 
 // Table Body SQL Select

@@ -8,7 +8,7 @@
 
 
 
-//include '../connect.php';
+//include 'connect.php';
 
 if ($_SERVER["REQUEST_METHOD"] == "POST")
 {
@@ -17,8 +17,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
 	$year = $_POST['year'];
 	$pass = md5($pass);
 	$login = true;
-include '../connect.php';
-	$result = mysqli_query($con32,"SELECT * FROM Users WHERE SNum = '$user'");
+include 'connect.php';
+	$result = mysqli_query($con2,"SELECT * FROM Users WHERE SNum = '$user'");
 	if(mysqli_num_rows($result)==0)
 	{echo '<html><br><body style="color: #FF0004"><div style="text-align:center"><strong>S# not found in database. Please re-enter. </strong></div></body></html>'; $login=false;}
 
@@ -35,7 +35,7 @@ include '../connect.php';
 
 	if($login == true && $_POST['ProfDev'])
 	{		$count = $row['Logins'] + 1;
-			mysqli_query($con32,"UPDATE Users SET Logins = '$count' WHERE SNum = '$user'");
+			mysqli_query($con2,"UPDATE Users SET Logins = '$count' WHERE SNum = '$user'");
 			$hour = time() + 14400;
 			setcookie("ID_Data", $user, $hour);
 			//setcookie("Key_Data", $pass, $hour);
@@ -45,7 +45,7 @@ include '../connect.php';
 
 	elseif($login == true)
 	{		$count = $row['Logins'] + 1;
-			mysqli_query($con32,"UPDATE Users SET Logins = '$count' WHERE SNum = '$user'");
+			mysqli_query($con2,"UPDATE Users SET Logins = '$count' WHERE SNum = '$user'");
 			$hour = time() + 14400;
 			$user = $user . "_" . $year;
 			setcookie("ID_Data", $user, $hour);
@@ -55,7 +55,7 @@ include '../connect.php';
 }
 
 
-mysqli_close($con32);
+mysqli_close($con2);
 ?>
 <!DOCTYPE html>
 <!--[if lt IE 7]> <html class="lt-ie9 lt-ie8 lt-ie7" lang="en"> <![endif]-->
