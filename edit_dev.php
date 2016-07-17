@@ -1,6 +1,6 @@
 <?php
 include 'id_verify.php'; //$user included as S# from cookie
-include 'connect.php';
+include '../connect.php';
 $id = $_POST['activityID'];
 $formSubmit = $_POST['formSubmit'];
 
@@ -128,22 +128,22 @@ $Comments = $_POST['Comments'];
 
 if(!empty($Other)){$Type = $_POST['Other'];} // check if other is empty for type
 
-$Comments=mysqli_real_escape_string($con, $Comments);
+$Comments=mysqli_real_escape_string($con3, $Comments);
 $Comments = str_replace(",",";",$Comments);
 
-mysqli_query($con,"UPDATE Activity SET Type = '$Type' WHERE id = '$id'");
-mysqli_query($con,"UPDATE Activity SET Item = '$Item' WHERE id = '$id'");
-mysqli_query($con,"UPDATE Activity SET Date = '$Date' WHERE id = '$id'");
-mysqli_query($con,"UPDATE Activity SET Sponsor = '$Sponsor' WHERE id = '$id'");
-mysqli_query($con,"UPDATE Activity SET Hours = '$Hours' WHERE id = '$id'");
-mysqli_query($con,"UPDATE Activity SET Comments = '$Comments' WHERE id = '$id'");
-if($target_file != NULL){mysqli_query($con,"UPDATE Activity SET File = '$target_file' WHERE id = '$id'");}
+mysqli_query($con3,"UPDATE Activity SET Type = '$Type' WHERE id = '$id'");
+mysqli_query($con3,"UPDATE Activity SET Item = '$Item' WHERE id = '$id'");
+mysqli_query($con3,"UPDATE Activity SET Date = '$Date' WHERE id = '$id'");
+mysqli_query($con3,"UPDATE Activity SET Sponsor = '$Sponsor' WHERE id = '$id'");
+mysqli_query($con3,"UPDATE Activity SET Hours = '$Hours' WHERE id = '$id'");
+mysqli_query($con3,"UPDATE Activity SET Comments = '$Comments' WHERE id = '$id'");
+if($target_file != NULL){mysqli_query($con3,"UPDATE Activity SET File = '$target_file' WHERE id = '$id'");}
 echo "Record Updated";
 }
 
 // Form
 else{
-$result = mysqli_query($con,"SELECT * FROM Activity WHERE id = '$id'");
+$result = mysqli_query($con3,"SELECT * FROM Activity WHERE id = '$id'");
 while($row = mysqli_fetch_array($result))
 {
 echo '<form role="form" method="post" action="edit_dev.php" enctype="multipart/form-data">';

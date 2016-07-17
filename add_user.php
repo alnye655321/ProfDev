@@ -1,6 +1,6 @@
 <?php
 include 'id_verify.php'; //$user included as S# from cookie
-include 'connect.php';
+include '../connect.php';
 
 $formSubmit = $_POST['formSubmit'];
 
@@ -106,16 +106,16 @@ $Prefix = $_POST['Prefix'];
 
 if(!empty($Other)){$Type = $_POST['Other'];} // check if other is empty for type
 
-$SNum=mysqli_real_escape_string($con, $SNum);
+$SNum=mysqli_real_escape_string($con3, $SNum);
 $SNum = str_replace(",",";",$SNum);
 
-$FirstName=mysqli_real_escape_string($con, $FirstName);
+$FirstName=mysqli_real_escape_string($con3, $FirstName);
 $FirstName = str_replace(",",";",$FirstName);
 
-$LastName=mysqli_real_escape_string($con, $LastName);
+$LastName=mysqli_real_escape_string($con3, $LastName);
 $LastName = str_replace(",",";",$LastName);
 
-$result = mysqli_query($con,"SELECT CRN FROM TeachingInfo ORDER BY CRN DESC LIMIT 1"); //set very high CRN to distinguish from actual courses. On first run set above 10 000 000 
+$result = mysqli_query($con3,"SELECT CRN FROM TeachingInfo ORDER BY CRN DESC LIMIT 1"); //set very high CRN to distinguish from actual courses. On first run set above 10 000 000 
 	$row = mysqli_fetch_array($result);
 	if($row['CRN'] < 10000000) { 
 		$CRN = 10000000;
@@ -128,11 +128,11 @@ $result = mysqli_query($con,"SELECT CRN FROM TeachingInfo ORDER BY CRN DESC LIMI
 $sql2 = "INSERT INTO TeachingInfo (CRN, SNum, FirstName, LastName, Subject, ContactHours, CourseCreditsHold)
 VALUES ('$CRN','$SNum','$FirstName','$LastName','$Prefix','0','0')";
 
-if (mysqli_query($con, $sql2)){
+if (mysqli_query($con3, $sql2)){
 
 	echo "New record created successfully";}
 	else {
-    echo "Error: " . $sql2 . "<br>" . mysqli_error($con);
+    echo "Error: " . $sql2 . "<br>" . mysqli_error($con3);
 }
 
 }

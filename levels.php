@@ -55,15 +55,15 @@ echo '<script>document.getElementById("'.$Display.'").className = "btn btn-prima
 
 // table select options
 if (!empty($SNum)){
-	$result = mysqli_query($con,"SELECT * FROM Level WHERE SNum = '$SNum'");
+	$result = mysqli_query($con3,"SELECT * FROM Level WHERE SNum = '$SNum'");
 }
 
 	else if(!empty($nameSearch)) {
-		$result = mysqli_query($con,"SELECT * FROM Level WHERE LastName = '$LastName' AND  FirstName = '$FirstName'");
+		$result = mysqli_query($con3,"SELECT * FROM Level WHERE LastName = '$LastName' AND  FirstName = '$FirstName'");
 	}
 
 		else {
-			$result = mysqli_query($con,"SELECT * FROM Level WHERE Prefix = '$dept' AND Inactive IS NULL");
+			$result = mysqli_query($con3,"SELECT * FROM Level WHERE Prefix = '$dept' AND Inactive IS NULL");
 		}
 
 

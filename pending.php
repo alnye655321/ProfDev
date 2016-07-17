@@ -56,27 +56,27 @@ echo '<div id="demo"><table>
 <tbody>';
 
 if($_SESSION["role"] == "VP") {
-$result = mysqli_query($con,"SELECT * FROM Activity WHERE VP is NULL");
+$result = mysqli_query($con3,"SELECT * FROM Activity WHERE VP is NULL");
 }
 
 else if($_SESSION["role"] == "chair") {
-  $result = mysqli_query($con,getDepts($user));
+  $result = mysqli_query($con3,getDepts($user));
 }
 
   else if (!empty($SNum)){
-    $result = mysqli_query($con,"SELECT * FROM Activity WHERE SNum = '$SNum' AND VP is NULL");
+    $result = mysqli_query($con3,"SELECT * FROM Activity WHERE SNum = '$SNum' AND VP is NULL");
   }
 
     else if(!empty($nameSearch)) {
-      $result = mysqli_query($con,"SELECT * FROM Activity WHERE LastName = '$LastName' AND  FirstName = '$FirstName' AND VP is NULL");
+      $result = mysqli_query($con3,"SELECT * FROM Activity WHERE LastName = '$LastName' AND  FirstName = '$FirstName' AND VP is NULL");
     }
 
       else if($_SESSION["role"] == "dean") {
-        $result = mysqli_query($con,"SELECT * FROM Activity WHERE Override = '0'");
+        $result = mysqli_query($con3,"SELECT * FROM Activity WHERE Override = '0'");
       }
 
         else {
-          $result = mysqli_query($con,"SELECT * FROM Activity WHERE Prefix = '$dept' AND VP is NULL");
+          $result = mysqli_query($con3,"SELECT * FROM Activity WHERE Prefix = '$dept' AND VP is NULL");
         }
 
 // Table Body SQL Select

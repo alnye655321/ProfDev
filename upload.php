@@ -1,5 +1,5 @@
 <?php
-//include 'connect.php';
+//include '../connect.php';
 // phpinfo();
 // permissions set to 757 on uploads folder in CCA server. Example on CCA Schedule Test/uploads
 

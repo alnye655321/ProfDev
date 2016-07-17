@@ -1,12 +1,12 @@
 <?php
 include 'id_verify.php'; //$user included as S# from cookie
-include 'connect.php';
+include '../connect.php';
 
 // functions
 function numberAttending($id) {
-	global $con;
+	global $con3;
 	
-	$getID = mysqli_fetch_assoc(mysqli_query($con,"SELECT * FROM Events WHERE id = '$id'"));
+	$getID = mysqli_fetch_assoc(mysqli_query($con3,"SELECT * FROM Events WHERE id = '$id'"));
 	$Regs = $getID["Regs"]; // find S#s of database saved registrants. string separated by " "
 	if($Regs != NULL) { // if there are any participants, build array from S#s and count
 		$arrayJoin = explode(" ", $Regs); //explode saved S#s into string
@@ -18,8 +18,8 @@ function numberAttending($id) {
 
 
 function displayName($SNumVal) {
-	global $con; global $LastName; global $FirstName;
-	$getID = mysqli_fetch_assoc(mysqli_query($con,"SELECT DISTINCT LastName, FirstName FROM TeachingInfo WHERE SNum = '$SNumVal'"));
+	global $con3; global $LastName; global $FirstName;
+	$getID = mysqli_fetch_assoc(mysqli_query($con3,"SELECT DISTINCT LastName, FirstName FROM TeachingInfo WHERE SNum = '$SNumVal'"));
 	$LastName = $getID["LastName"];
 	$FirstName = $getID["FirstName"];
 		
@@ -35,7 +35,7 @@ $completeEvent = $_POST['completeEvent'];
 
 if($completeEvent == "true") {
 	$id = $_POST['id'];
-	$getID = mysqli_fetch_assoc(mysqli_query($con,"SELECT * FROM Events WHERE id = '$id'"));
+	$getID = mysqli_fetch_assoc(mysqli_query($con3,"SELECT * FROM Events WHERE id = '$id'"));
 	
 	$SNumCreator = $getID["SNum"]; $Type = $getID["Type"]; $Item = $getID["Item"]; $Date = $getID["Date"]; $Sponsor = $getID["Sponsor"]; 
 	$Hours = $getID["Hours"]; $Comments = $getID["Comments"]; //get all info from event
@@ -46,21 +46,21 @@ if($completeEvent == "true") {
 		foreach ($arrayJoin as $SNumX) {
 			displayName($SNumX); // get first and last names
 			
-			$getID = mysqli_fetch_assoc(mysqli_query($con,"SELECT DISTINCT Subject FROM TeachingInfo WHERE SNum = '$SNumX' LIMIT 1")); // get prefix
+			$getID = mysqli_fetch_assoc(mysqli_query($con3,"SELECT DISTINCT Subject FROM TeachingInfo WHERE SNum = '$SNumX' LIMIT 1")); // get prefix
 			$Prefix = $getID["Subject"];
 
-			$result = mysqli_query($con,"SELECT id FROM Activity ORDER BY id DESC LIMIT 1"); // get new update id (largest +1) from activity table
+			$result = mysqli_query($con3,"SELECT id FROM Activity ORDER BY id DESC LIMIT 1"); // get new update id (largest +1) from activity table
 			$row = mysqli_fetch_array($result);
 			$idActivity=$row['id'] + 1;
 			
 			$sql2 = "INSERT INTO Activity (id, SNum, LastName, FirstName, Type, Item, Date, Sponsor, Hours, Prefix, Comments)
 			VALUES ('$idActivity','$SNumX','$LastName','$FirstName','$Type','$Item','$Date','$Sponsor','$Hours','$Prefix','$Comments')";
 			// ++ email chairs
-			if (mysqli_query($con, $sql2)){echo "New record created successfully";}
-			else {echo "Error: " . $sql2 . "<br>" . mysqli_error($con);}
+			if (mysqli_query($con3, $sql2)){echo "New record created successfully";}
+			else {echo "Error: " . $sql2 . "<br>" . mysqli_error($con3);}
 			
 			$today = date("Y/m/d");
-			mysqli_query($con,"UPDATE Events SET Complete = '$today' WHERE id = '$id'"); //set completed event date as today
+			mysqli_query($con3,"UPDATE Events SET Complete = '$today' WHERE id = '$id'"); //set completed event date as today
 		}
 	}
 }
@@ -328,7 +328,7 @@ cursor:pointer;
 	<tbody>';
 
 
-$result = mysqli_query($con,"SELECT * FROM Events WHERE id != '1' ORDER BY Date");
+$result = mysqli_query($con3,"SELECT * FROM Events WHERE id != '1' ORDER BY Date");
 
 
 // Table Body SQL Select
