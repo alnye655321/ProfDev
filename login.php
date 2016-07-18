@@ -33,36 +33,26 @@ include 'connect.php';
 
 		}
 
-	if($login == true && $_POST['ProfDev'])
+	if($login == true)
 	{		$count = $row['Logins'] + 1;
 			mysqli_query($con2,"UPDATE Users SET Logins = '$count' WHERE SNum = '$user'");
 			$hour = time() + 14400;
-			setcookie("ID_Data", $user, $hour);
-			//setcookie("Key_Data", $pass, $hour);
-			echo "<script> window.location.assign('ProfDev/index.php'); </script>";}
-
-
-
-	elseif($login == true)
-	{		$count = $row['Logins'] + 1;
-			mysqli_query($con2,"UPDATE Users SET Logins = '$count' WHERE SNum = '$user'");
-			$hour = time() + 14400;
-			$user = $user . "_" . $year;
 			setcookie("ID_Data", $user, $hour);
 			//setcookie("Key_Data", $pass, $hour);
 			echo "<script> window.location.assign('index.php'); </script>";}
 
+mysqli_close($con2);
 }
 
 
-mysqli_close($con2);
+
 ?>
 <!DOCTYPE html>
 <!--[if lt IE 7]> <html class="lt-ie9 lt-ie8 lt-ie7" lang="en"> <![endif]-->
 <!--[if IE 7]> <html class="lt-ie9 lt-ie8" lang="en"> <![endif]-->
 <!--[if IE 8]> <html class="lt-ie9" lang="en"> <![endif]-->
 <!--[if gt IE 8]><!--> <html lang="en"> <!--<![endif]-->
-<title>CCA Annual Scheduling and Professional Development</title>
+<title>CCA Professional Development</title>
 <head>
 <style>
 html, body, div, span, applet, object, iframe,
@@ -364,7 +354,7 @@ label {
 
 <body>
 
-<div class="header"><h1>Login to CCA Schedule/ProDev</h1></div>
+<div class="header"><h1>Login to CCA ProDev</h1></div>
 
 <?php
 echo '<form method="post" class="login" action="';
@@ -381,19 +371,13 @@ echo '">';
       <input type="password" name="pass" id="password" value="">
     </p>
 
-	  <p>
-      <label>Year:</label>
-      <select name="year" id="year">
-       <option value="2017">2017</option>
-        <option value="2016">2016</option>
-       </select>
-    </p>
-		<label>ProDev:</label> <input type="checkbox" name="ProfDev" style="margin-top:10px;">
+
+
     <p class="login-submit">
       <button type="submit" class="login-button">Login</button>
     </p>
 
-  <p class="forgot-password"><a href="changepw.php">Change your Password</a></p>
+
   </form>
 
 
