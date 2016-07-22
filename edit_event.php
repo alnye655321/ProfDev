@@ -210,17 +210,16 @@ $(document).ready(function(){
           <ul class="nav navbar-nav">
             <li><a href="events.php">Events</a></li>
             <li><a href="#about">Credentials</a></li>
-            <li><a href="#contact">PlaceHolder</a></li>
             <li class="dropdown">
               <a class="dropdown-toggle" data-toggle="dropdown" href="#">Add<span class="caret"></span></a>
               <ul class="dropdown-menu">
                 <li><a href="add_dev.php">Add ProfDev</a></li>
                 <li><a href="add_event.php">Add Event</a></li>
                 <li><a href="add_user.php">Add missing user</a></li>
-                <li role="separator" class="divider"></li>
+<!--                <li role="separator" class="divider"></li>
                 <li class="dropdown-header">Nav header</li>
                 <li><a href="#">Separated link</a></li>
-                <li><a href="#">One more separated link</a></li>
+                <li><a href="#">One more separated link</a></li>-->
               </ul>
             </li>
           </ul>
