@@ -378,7 +378,7 @@ echo '</table></div>';
 	</div>
 </div> <!-- End Main Table Div -->
 
-<div class="container">
+<!--<div class="container">
 
   <div class="page-header">
         <h1>Panels</h1>
@@ -401,7 +401,7 @@ echo '</table></div>';
               Panel content
             </div>
           </div>
-        </div><!-- /.col-sm-4 -->
+        </div>
         <div class="col-sm-4">
           <div class="panel panel-success">
             <div class="panel-heading">
@@ -419,7 +419,7 @@ echo '</table></div>';
               Panel content
             </div>
           </div>
-        </div><!-- /.col-sm-4 -->
+        </div>
         <div class="col-sm-4">
           <div class="panel panel-warning">
             <div class="panel-heading">
@@ -437,10 +437,10 @@ echo '</table></div>';
               Panel content
             </div>
           </div>
-        </div><!-- /.col-sm-4 -->
+        </div>
       </div>
 
-</div>
+</div>-->
 
 <!-- Popup Divs -->	
 <div class="modal2" id="Info" style="display:none;"></div>
