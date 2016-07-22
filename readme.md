@@ -1,6 +1,7 @@
 # profDev
 Higher Education Professional Development Management System and Database
-<h1>Dependencies</h1>
+<hr>
+<h1>Dependencies:</h1>
 <hr>
 <a href="https://github.com/DataTables/DataTables" target="_blank">Datatables</a><br>
 <a href="http://getbootstrap.com/" target="_blank">Bootsrap 3.0</a><br>
