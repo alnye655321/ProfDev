@@ -560,7 +560,7 @@ if($Display == "Payroll"){
             ?>
             </div>
           </div>
-          <div class="panel panel-primary">
+<!--          <div class="panel panel-primary">
             <div class="panel-heading">
               <h3 class="panel-title">Panel title</h3>
             </div>
@@ -568,7 +568,7 @@ if($Display == "Payroll"){
               Panel content
             </div>
           </div>
-        </div><!-- /.col-sm-4 -->
+        </div>
         <div class="col-sm-4">
           <div class="panel panel-success">
             <div class="panel-heading">
@@ -586,7 +586,7 @@ if($Display == "Payroll"){
               Panel content
             </div>
           </div>
-        </div><!-- /.col-sm-4 -->
+        </div>
         <div class="col-sm-4">
           <div class="panel panel-warning">
             <div class="panel-heading">
@@ -604,7 +604,8 @@ if($Display == "Payroll"){
               Panel content
             </div>
           </div>
-        </div><!-- /.col-sm-4 -->
+        </div>-->
+        
       </div>
 
 </div>
