@@ -529,6 +529,8 @@ if($Display == "Payroll"){
             </div>
             <div class="panel-body">
             <?php
+						if ($_SESSION["admin"] == true) {
+
             echo '<form method="post" action="index.php">';
 
 	            echo '<p><strong>Change Role To:</strong></p>
@@ -556,8 +558,10 @@ if($Display == "Payroll"){
 				  echo '<button type="submit" class="btn btn-default">Submit</button>';
 
             echo '</form>';
-
+					}
             ?>
+						<br>
+						<a href="logout.php">Logout</a>
             </div>
           </div>
 <!--          <div class="panel panel-primary">
@@ -605,7 +609,7 @@ if($Display == "Payroll"){
             </div>
           </div>
         </div>-->
-        
+
       </div>
 
 </div>

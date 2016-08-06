@@ -12,14 +12,14 @@ $today = date("m/d/Y");
 <head>
 	<meta charset="utf-8">
 	<title>Add Event</title>
-	
+
 
 
 	<!-- jQuery -->
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 	<script src="js/bootstrap.min.js"></script>
 	<script src="js/bootstrap-datepicker.min.js"></script>
-	
+
 
 	<!-- Demo stuff -->
 	<link rel="stylesheet" href="css/jq.css">
@@ -43,16 +43,16 @@ $today = date("m/d/Y");
 <script type="text/javascript">
             // When the document is ready
             $(document).ready(function () {
-              	
-                
+
+
                 $('#Date').datepicker({
                     format: "mm/dd/yyyy"
-                    
-                    
-                });  
-            
-            });          
-         
+
+
+                });
+
+            });
+
 </script>
 <!-- Close Initialize Datepicker-->
 
@@ -61,7 +61,7 @@ $today = date("m/d/Y");
 <body role="document">
 
     <!-- Fixed navbar -->
-    <nav class="navbar navbar-inverse navbar-fixed-top">
+		<nav class="navbar navbar-inverse navbar-fixed-top">
       <div class="container">
         <div class="navbar-header">
           <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
@@ -74,19 +74,18 @@ $today = date("m/d/Y");
         </div>
         <div id="navbar" class="navbar-collapse collapse">
           <ul class="nav navbar-nav">
-            <li class="active"><a href="events.php">Events</a></li>
+            <li><a href="events.php">Events</a></li>
             <li><a href="#about">Credentials</a></li>
-            <li><a href="#contact">PlaceHolder</a></li>
             <li class="dropdown">
               <a class="dropdown-toggle" data-toggle="dropdown" href="#">Add<span class="caret"></span></a>
               <ul class="dropdown-menu">
                 <li><a href="add_dev.php">Add ProfDev</a></li>
                 <li><a href="add_event.php">Add Event</a></li>
-                <li><a href="#">Something else here</a></li>
-                <li role="separator" class="divider"></li>
+                <li><a href="add_user.php">Add missing user</a></li>
+<!--                <li role="separator" class="divider"></li>
                 <li class="dropdown-header">Nav header</li>
                 <li><a href="#">Separated link</a></li>
-                <li><a href="#">One more separated link</a></li>
+                <li><a href="#">One more separated link</a></li>-->
               </ul>
             </li>
           </ul>
@@ -156,7 +155,7 @@ echo "if(this.value=='Other')
 {document.getElementById('lab1').style.display = 'inherit';}
  else {
  	document.getElementById('lab1').style.display = 'none';};";
-echo '">"'; 
+echo '">"';
 echo '<option>Activity</option>';
 echo '<option>D2L</option>';
 echo '<option>MPT</option>';
@@ -210,5 +209,3 @@ echo '</form>';
 
 </body>
 </html>
-
-

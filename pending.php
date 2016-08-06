@@ -56,7 +56,7 @@ echo '<div id="demo"><table>
 <tbody>';
 
 if($_SESSION["role"] == "VP") {
-$result = mysqli_query($con,"SELECT * FROM Activity WHERE VP is NULL");
+$result = mysqli_query($con,"SELECT * FROM Activity WHERE VP is NULL AND Chair IS NOT NULL");
 }
 
 else if($_SESSION["role"] == "chair") {
