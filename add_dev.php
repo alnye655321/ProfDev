@@ -269,7 +269,7 @@ if($formSubmit == "true"){
 	Name : $LastName  ,  $FirstName  \r\n
 	Type: $Type  \r\n
 	Item: $Item";
-	email(getChairEmail($SNum),"alnye655321@gmail.com", "CCA ProDev - Activity Addition", $message);
+	email(getChairEmail($SNum),"Schedulers.cca@ccaurora.edu", "CCA ProDev - Activity Addition", $message);
 
 
 }

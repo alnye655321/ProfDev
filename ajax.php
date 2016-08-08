@@ -172,7 +172,7 @@ if(!empty($Chair)){
 	$MailSubject = "ProDev - New Activity for VP Approval";
 	$message = "ProDev - New Activity for VP Approval";
 	$headers = "From: CCA_ProDev" . "\r\n" .
-	"CC: alnye655321@gmail.com";
+	"CC: Schedulers.cca@ccaurora.edu";
 	mail($to, $MailSubject, $message,$headers);
 	//close email
 	}
