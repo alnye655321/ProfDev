@@ -10,13 +10,13 @@ $formSubmit = $_POST['formSubmit'];
 <head>
 	<meta charset="utf-8">
 	<title>Add Prof Dev</title>
-	
+
 
 
 	<!-- jQuery -->
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 	<script src="js/bootstrap.min.js"></script>
-	
+
 
 	<!-- Demo stuff -->
 	<link rel="stylesheet" href="css/jq.css">
@@ -40,7 +40,7 @@ $formSubmit = $_POST['formSubmit'];
 
 	<link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
 	<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
-	
+
 	<script>
 	$(function() {
 	    $( "#nameSearch" ).autocomplete({
@@ -49,7 +49,7 @@ $formSubmit = $_POST['formSubmit'];
 	    });
 	});
 	</script>
-	
+
 
 <!-- /jQuery UI autocomplete -->
 
@@ -108,7 +108,7 @@ $formSubmit = $_POST['formSubmit'];
 
 // SQL Add
 if($formSubmit == "true"){
-	
+
 			$uploadOk = 1; $target_file = NULL;
 		if($_FILES["fileToUpload"]["error"] == 0) {
 			include 'upload.php';
@@ -173,7 +173,7 @@ echo '">"';
 echo '<option>'.$row['Type'].'</option>';
 echo '<option>Activity</option>';
 echo '<option>D2L</option>';
-echo '<option>MPT</option>';
+echo '<option>EDU222</option>';
 echo '<option>NFO</option>';
 echo '<option>Project</option>';
 echo '<option>Other</option>';
@@ -223,7 +223,7 @@ echo '</p>';
  <div style="position:relative;"> <!--file upload styling/script-->
  <a class='btn btn-primary' href='javascript:;'>
  Replace File...
-<input type="file" name="fileToUpload" id="fileToUpload" style='position:absolute;z-index:2;top:0;left:0;filter: alpha(opacity=0);-ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";opacity:0;background-color:transparent;color:transparent;' 
+<input type="file" name="fileToUpload" id="fileToUpload" style='position:absolute;z-index:2;top:0;left:0;filter: alpha(opacity=0);-ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";opacity:0;background-color:transparent;color:transparent;'
 size="40"  onchange='$("#upload-file-info").html($(this).val());'>
 </a>
 &nbsp;
@@ -244,5 +244,3 @@ echo '</form>';
 
 </body>
 </html>
-
-

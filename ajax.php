@@ -11,7 +11,7 @@ include 'connect.php';
 function levelUpdate($SNum)
 {
 	global $con;
-	
+
 	$getID = mysqli_fetch_assoc(mysqli_query($con,"SELECT * FROM Level WHERE SNum = '$SNum'"));
 	$EDU222 = $getID["EDU222"]; $D2L = $getID["D2L"]; $NFO = $getID["NFO"]; $level = $getID["Level"];
 	$ChairRec2 = $getID["ChairRec2"]; $ChairRec3 = $getID["ChairRec3"]; $LastName = $getID["LastName"];
@@ -31,7 +31,7 @@ function levelUpdate($SNum)
 		}
 
 	$hoursTotal = 0; //start counting for 15hr profDev requirement for lvl 3
-	$result1 = mysqli_query($con,"SELECT Hours FROM Activity WHERE SNum = '$SNum' AND Type != 'D2L' AND Type != 'MPT' AND Type != 'NFO'");
+	$result1 = mysqli_query($con,"SELECT Hours FROM Activity WHERE SNum = '$SNum' AND Type != 'D2L' AND Type != 'MPT' AND Type != 'NFO' AND Type != 'EDU222'");
 		while($row = mysqli_fetch_array($result1))
 		{
 			$hoursTotal = $hoursTotal + $row['Hours'];
@@ -189,7 +189,7 @@ if(!empty($VP)){
 	$getID = mysqli_fetch_assoc(mysqli_query($con,"SELECT SNum FROM Activity WHERE id = '$id'"));
 	$SNum = $getID["SNum"];
 
-	if($devType == "D2L" || $devType == "MPT" || $devType == "NFO") {  //set Level table booleans if one of these types
+	if($devType == "D2L" || $devType == "MPT" || $devType == "NFO" || $devType == "EDU222") {  //set Level table booleans if one of these types
 		if($devType == "MPT"){$devType = "EDU222";} // if MPT type change to EDU222 for column search) {}
 		mysqli_query($con,"UPDATE Level SET $devType = '1' WHERE SNum = '$SNum'");
 	}

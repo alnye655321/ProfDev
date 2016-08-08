@@ -26,9 +26,9 @@ while($row = mysqli_fetch_array($result))
 			{
 				$Subject = $row1['Subject'];
 				mysqli_query($con,"UPDATE level_info SET Prefix = '$Subject' WHERE id = '$id'");
-				
+
 			}
-		
+
 		}
 	}
 echo "<br>finished";
@@ -54,9 +54,9 @@ while($row = mysqli_fetch_array($result))
 				$LastName = $row1['LastName'];
 				mysqli_query($con,"UPDATE level_info SET FirstName = '$FirstName' WHERE id = '$id'");
 				mysqli_query($con,"UPDATE level_info SET LastName = '$LastName' WHERE id = '$id'");
-				
+
 			}
-		
+
 		}
 	}
 echo "<br>finished";

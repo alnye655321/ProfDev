@@ -304,7 +304,7 @@ echo "if(this.value=='Other')
 echo '">"';
 echo '<option>Activity</option>';
 echo '<option>D2L</option>';
-echo '<option>MPT</option>';
+echo '<option>EDU222</option>';
 echo '<option>NFO</option>';
 echo '<option>Project</option>';
 echo '<option>Other</option>';
