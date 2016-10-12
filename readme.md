@@ -1,5 +1,5 @@
-# profDev
-Higher Education Professional Development Management System and Database
+# ProfDev
+An application built for higher education professional development tracking. Academic departments partially base their standings on accumulating hours of different kinds of professional development. The application includes an algorithm to automatically track and raise the standings of those participating. It also includes an approval system for the professional development to travel through different levels of the department.
 <hr>
 <h1>Dependencies:</h1>
 <hr>
